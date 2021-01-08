@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //call 调用一个对象的一个方法，以另一个对象替换当前对象
+        //call(this.Obj[;args]);
+        //构造函数
+        function Student(name,age){
+            this.name = name;
+            this.age = age;
+        }
+        var show = function(a){
+            console.log(this.name,this.age,a);
+        }
+        var rose = new Student('zywds',12);
+        show.call(rose,1);
+
+
+
+    </script>
+</body>
+</html>

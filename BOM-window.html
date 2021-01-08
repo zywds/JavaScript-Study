@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        p{
+            font-size: 30px;
+            
+        }
+        div{
+            margin: 100px;
+        }
+        span{
+            font-size: 100px;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div>
+        <h1>DOM-window</h1>
+        <p><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span></p>
+        <p><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span></p>
+        <p><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span></p>
+        <p><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span></p>
+        <p><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span></p>
+        <p><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span></p>
+        <p><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span></p>
+        <p><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span></p><p><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span></p>
+        <p><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span></p>
+        <p><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span></p>
+
+    </div>
+    
+    <script>
+        //console.log(window);
+        //window对象表示浏览器中打开的窗口
+        //方法
+        function fun() {
+            //window可省略
+            //window.alert('123');
+            //关闭浏览器窗口
+            //close();
+            //显示带有一段消息以及确认按钮和取消按钮的对话框
+            //confirm('确认要关闭嘛?');
+            //打开一个新的浏览器窗口或查找一个已命名的窗口,浏览器上方是有一个新窗口的地址
+            //window.open('http://www.baidu.com');
+            //window.open('','','width=200,height=100')
+            //window.print();
+            //定义用户输入，第二个参数如果填了，输入框中就会出现内容
+            //prompt("Please enter your name","ddd");
+            
+            //和打开的小窗口结合着用
+            //resizeBy() 按照指定的像素调整窗口的大小 所有浏览器都支持，除了opera和chrome
+            //window.resizeBy(1000,1000);
+            //resizeTo() //把窗口调整到指定坐标 所有浏览器都支持
+            //window.open('','', 'width=100,height=100').resizeTo(500,500);
+
+            //scrollBy() 按照指定的像素值来滚动内容 所有主流浏览器都支持,滚动指定像素的内容 不可直接滚动，需要页面加载完等会
+            //setTimeout('window.scrollBy(100,100)',2000);
+            //scrollTo() 把内容滚动到指定的坐标 不可直接滚动，需要页面加载完等会
+            //setTimeout('window.scrollTo(200,200)',1000);
+
+            //setInterval()方法会不停的调用函数，知道clearInterval()被调用或窗口被关闭
+            //由setInterval()返回的ID可由clearInterval()方法清除
+            //setInterval('alert("123")',5000);
+            //setTimeout()只执行一次
+            //setTimeout('alert("123")',500);
+
+
+        };
+        fun();
+        //属性
+        function attr() {
+            //	对 Document 对象的只读引用。请参阅 Document 对象。
+            //console.log(window.document);
+            //	对 History 对象的只读引用。请参数 History 对象。
+            //console.log(window.history);
+            //	用于窗口或框架的 Location 对象。请参阅 Location 对象。
+            //console.log(window.location)
+            //	对 Navigator 对象的只读引用。请参数 Navigator 对象。
+            //console.log(window.navigator);
+            //	对 Screen 对象的只读引用。请参数 Screen 对象。
+            //console.log(window.screen);
+
+            //声明了窗口的文档显示区的高度和亮度，
+            //不包括菜单栏，工具栏、滚动条、如果F12打开了也不包括
+            //也就是页面内容展示的区域
+            //IE不支持
+            //console.log(window.innerWidth);
+            //console.log(window.innerHeight);
+
+            //整个窗口的外部高度，包括所有的界面元素（如工具栏和滚动条菜单栏）
+            //IE8及更早的版本不支持
+            //console.log(window.outerWidth) 
+            //console.log(window.outerHeight) 
+
+            //IE8或以下不支持，但可以使用document.documentELement.scrollLeft,scrollTop
+            //解释：与滚动条相结合。比如出现滚动条，我将滚动条往下，往右拉，那么就会有值
+            //console.log(window.pageXOffset);//0
+            //console.log(window.pageYOffset);//0
+            
+            //返回窗口相对于屏幕的X和Y坐标
+            //这里的窗口指的是整个页面窗口，比如页面缩小，距离屏幕左边有距离，那么left和x就有值
+            //所有主流浏览器都支持screenLeft和screenTop属性，firfox除外
+            //firefox浏览器请使用sreeenX and screenY
+            //console.log(window.screenLeft);//0
+            //console.log(window.screenTop);//0
+            //console.log(screenX);//0
+            //console.log(screenY);//0
+
+
+
+
+        };
+        attr();
+
+
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //构造函数
+        //首字母大写，函数体中含有this
+        function Student(name,age){
+            this.name = name;
+            this.age = age;
+            this.show = function(){
+                console.log(this.name + ';' + this.age);
+            }
+        };
+
+        //通过new关键字调用构造函数，创建一个对象
+        var rose = new Student('zywds',12);
+        var jack = new Student('luoyili',13);
+        rose.show();
+        jack.show();
+
+
+
+    </script>
+</body>
+</html>

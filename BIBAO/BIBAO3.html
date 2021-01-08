@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        alert(typeof Object.beget);
+        //null object 返回的是object
+        if (typeof Object.beget==="undefined"){
+            Object.beget = function(proto){
+                var F = function(){};
+                F.prototype = proto;
+                //new Function定义函数
+                return new F();
+            };
+        };
+        //机器
+        var Machine = {
+            name:"机器",
+            show:function(){
+                console.log(this.name);
+            }
+        };
+
+        //创建对象，指定原型
+        var b = Object.beget(Machine);
+        console.log(b.name);
+        b.name = '宝马';
+        console.log(b.name);
+
+
+
+    </script>
+
+
+
+</body>
+</html>

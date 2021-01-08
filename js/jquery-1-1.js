@@ -1,0 +1,1 @@
+(function(a){a(window,jQuery,document)}(function(b,c,a){c.fn.addWidth=function(e){var d={length:1,color:"blue",callback:null};c.extend(d,e);c.each(this,function(f,g){c("<span/>").html("+").css({course:"pointer",color:d.color}).click(function(){c(g).width(c(g).width()+d.length);if(d.callback){d.callback(g)}}).insertAfter(g)})}}));

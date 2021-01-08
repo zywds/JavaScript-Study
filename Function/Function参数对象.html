@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //参数对象(arguments)
+        var coun = function(){
+            var sum = 0;
+            for(var i = 0;i<arguments.length;i++){
+                sum += arguments[i];
+            };
+            return sum;
+            
+        };
+        console.log(coun(1,2,3,4,5));
+        //不传参数也可以
+        console.log(coun());
+        //arguments是一个隐式对象，不声明也在函数中，内部函数可以访问外部函数
+        //的任意内容，但是不能直接访问外部函数的arguments与this对象
+        function f1(){
+            console.log(arguments.length);
+            var f2 = function(){
+                console.log(arguments.length);
+            };
+            return f2;
+        };
+        var f = f1(1,2,3);
+        f();
+
+
+    </script>
+</body>
+</html>

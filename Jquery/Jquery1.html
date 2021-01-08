@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="../js/jquery-1.11.3.js"></script>
+    <script>
+        console.log(typeof jQuery); //function
+        console.log(jQuery.prototype === jQuery.fn);//true
+
+        console.log(typeof jQuery.prototype);//object
+        console.log(jQuery===$);//true
+        //里面含有jQuery的很多方法
+
+        jQuery.prototype.log = function(){
+            alert(this);
+        };
+        $("body").log();
+    </script>
+</body>
+</html>

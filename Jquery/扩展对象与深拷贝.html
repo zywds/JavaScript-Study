@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="../js/jquery-1.11.3.js"></script>
+    <script>
+        var x = {x:1,y:2};
+        var y = {y:3,z:3};
+        var z = {z:4};
+        //都扩展到第一个对象中
+        $.extend(x,y,z);
+        console.log(x.x,x.y,x.z);
+        console.log(x);
+
+
+    </script>
+</body>
+</html>

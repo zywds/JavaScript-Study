@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>JavaScript中存放artTemplate模板</h1>
+    <div id="div1"></div>
+    <script src="../js/template-web.js"></script>
+    <script>
+        var source = '' +
+        '<ul>' +
+            '{{each list}}' +
+                '<li>{{$index}}:{{$value}}</li>' +
+            '{{/each}}'+
+        '</ul>';
+        var render = template.compile(source);
+        var data = {
+            title:'artTemplate',
+            isFalg:true,
+            list:['苹果','桃子','香蕉','梨']
+        };
+        document.getElementById("div1").innerHTML = render(data);
+
+
+
+    </script>
+</body>
+</html>

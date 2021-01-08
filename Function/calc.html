@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //calc指的是调用函数的函数
+        function add(){
+            console.log("add被调用");
+            console.log(add.caller);
+        };
+        function calc(){
+            add();
+        };
+        add(); //add被调用 null
+        calc(); //add被调用 function calc(){add();};
+
+
+
+    </script>
+</body>
+</html>

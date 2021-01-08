@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function test1(){
+            var arr = ['12','323','1000','50'];
+            arr.sort();
+            console.log(arr);
+            //升序
+            arr.sort(function(a,b){
+                return a - b;
+            });
+            console.log(arr);
+            //降序
+            arr.sort(function(a,b){
+                return b - a;
+            });
+            console.log(arr);
+        };
+        test1();
+
+        function test2(){
+            //按照数组对象中某个属性值进行排序
+            var arr = [
+                {name:"张飞",age:34},
+                {name:"刘备",age:54},
+                {name:"关羽",age:24}
+            ];
+            arr.sort(function(a,b){
+                return a.age - b.age;
+            });
+            console.log(arr);
+
+        };
+        test2();
+
+        function test3(){
+            //根据属性排序
+            var data = [
+                {name: "Bruce", age: 23, id: 16, score: 80},
+                {name: "Alice", age: 24, id: 12, score: 90},
+                {name: "David", age: 21, id: 11, score: 70},
+                {name: "Cindy", age: 22, id: 10, score: 100}
+            ];
+            console.log(data.sort(compareUp("age")));
+            
+            function compareUp(propertyName) { // 升序排序
+                console.log(typeof data[0][propertyName]);
+                if ((typeof data[0][propertyName]) != "number") { // 属性值为非数字
+                    return function(object1, object2) {
+                        var value1 = object1[propertyName];
+                        var value2 = object2[propertyName];
+                        return value1.localeCompare(value2);
+                    }
+                }
+                else {
+                    return function(object1, object2) { // 属性值为数字
+                        return object1[propertyName] - object2[propertyName];
+                    }
+                }
+            };
+            //console.log(data.sort(compareDown("age")));
+            function compareDown(propertyName) { // 降序排序
+                if ((typeof data[0][propertyName]) != "number") { // 属性值为非数字
+                    return function(object1, object2) {
+                        var value1 = object1[propertyName];
+                        var value2 = object2[propertyName];
+                        return value2.localeCompare(value1);
+                    }
+                }
+                else {
+                    return function(object1, object2) { // 属性值为数字
+                        return object2[propertyName] - object1[propertyName];
+                    }
+                }
+            }
+
+
+        };
+        test3();
+
+
+
+
+    </script>
+</body>
+</html>

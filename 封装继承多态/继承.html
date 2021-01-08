@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //方法一：
+        //人
+        var Person = function(){
+            this.name = '姓名';
+        }
+        //学生
+        var Student = function(grade){
+            this.grade = grade;
+        }
+        Student.prototype = new Person();//学生继承自人
+        var tom = new Student(12);
+        console.log(tom.name,tom.grade);
+
+        //对象创建，可以理解为继承,里面的new Person()可以理解为指定的原型对象
+        var doctor1 = Object.create(new Person());
+        console.log(doctor1.name);
+        
+
+
+
+    </script>
+</body>
+</html>

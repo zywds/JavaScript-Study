@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+       function A() {this.x="x";};
+        var a=new A();
+        
+        function B() {this.y="y"};
+        B.prototype=a;
+        var b=new B();
+        
+        function C() {this.z="z"};
+        C.prototype=b;
+        var c=new C();
+        
+        console.log(c instanceof C);
+        console.log(c instanceof B);
+        console.log(c instanceof A);
+        console.log(c instanceof Object);
+        
+        console.log(c.x+","+c.y+","+c.z); 
+
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    价格：<input type="text" id="price" /><span id="priceMsg"></span>
+    <script src="../js/jquery-1.11.3.js"></script>
+    <script>
+        function valid(){
+            var price = $("#price");
+            var priceMsg = $("#priceMsg");
+            var val = "";
+            return (val = price.val(),isNaN(val)) ? (priceMsg.html("格式错误"),false):(priceMsg.html(""),true);
+        };
+        $("#price").keyup(function(){
+            console.log(valid());
+        });
+
+    </script>
+</body>
+</html>

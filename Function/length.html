@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function add(a,b){
+            console.log(arguments.length); //传入的参数个数
+            console.log(add.length); //命名的参数个数，指的是add(a,b)里面定义的两个参数
+        };
+        add(); //0 2
+        add(1); //1 2
+        add(1,2,3); //3 2
+
+
+
+    </script>
+
+
+
+</body>
+</html>

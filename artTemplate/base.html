@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        ul{
+            list-style: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="div1"></div>
+    <script type="text/html" id="artTemplate1">
+        {{if isFalg}}
+            <h1>{{title}}</h1>
+            <ul>
+                {{each list}}
+                    <li>{{$index}}:{{$value}}</li>
+                {{/each}}
+            </ul>
+        {{/if}}
+        <!-- 模板一级变量用$方式输出 -->
+        {{$data}}
+
+
+    </script>
+
+    <script src="../js/template-web.js"></script>
+    <script>
+        var data = {
+            title:'artTemplate',
+            isFalg:true,
+            list:['苹果','香蕉','梨子','桃']
+        };
+        document.getElementById("div1").innerHTML = template('artTemplate1',data);
+
+
+    </script>
+
+</body>
+</html>

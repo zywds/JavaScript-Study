@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a id="a1">我是张育威</a>
+    <button id="button1">关闭test3对话框</button>
+    <script src="../js/jquery-1.11.3.js"></script>
+    <script src="../js/dialog.js"></script>
+    <script>
+        function test1(){
+            var d = dialog({
+                title:'欢迎',
+                content:'欢迎使用artDialog对话框组件!'
+            });
+            //普通对话框
+            //dialog.show();
+            //模态对话框，有遮罩层
+            d.showModal();
+        };
+        //test1();
+
+        function test2(){
+            //top,top left,left top,left,left bottom,bottom left,bottom,bottom right,right bottom,right,right top,top right
+            //气泡浮层
+            //可吸附到元素上，同时对话框将呈现气泡样式
+            var d = dialog({
+                content: 'Hello World!',
+                align:'bottom',
+                quickClose: true// 点击空白处快速关闭
+            });
+            d.show(document.getElementById('a1'));
+        };
+        //test2();
+
+        function test3(){
+            var d = dialog({
+                title:'提示',
+                content:'按钮回调函数返回false则不许关闭',
+                okValue:'确定',
+                ok:function(){
+                    this.title('提交中...');
+                    return false;
+                },
+                cacelValue:'取消',
+                cancel:function(){},
+                //对话框状态栏区域HTML代码
+                statusbar:'<label><input type="checkbox">不再提醒</label>'
+            });
+            d.show();
+            
+            //控制对话框关闭
+            setTimeout(function(){
+                //close()方法只隐藏对话框，不会在DOM中删除，删除使用remove()方法，销毁后无法使用，
+                //一般使用close()关闭对话框，让对话框处于隐藏状态
+                d.close();
+                //d.close().remove();
+            }, 1000);
+            
+        };
+        //test3();
+
+        function test4(){
+            //按钮事件返回false不会关闭
+            var d = dialog({
+                title:'欢迎',
+                content:'Hello word!',
+                okValue:'确定',
+                ok:function(){
+                    //如果空则没反应，如果返回false，点击不会关闭
+                    return false;
+                },
+                cancelValue:'取消',
+                cancel:function(){
+                    return false;
+                }
+            });
+            d.show();
+        };
+        //test4();
+
+        function test5(){
+            var d =dialog({
+                title:'欢迎',
+                content:'欢迎使用对话框组件！',
+                cancel:false, //此时取消按钮失效，不可显示
+                okValue:'确定',
+                ok:function(){}
+            });
+            d.show();
+        };
+        //test5();
+        
+        function test6(){
+            //或者可以使用链式设置宽高，d.width(320).height(100).show()
+            var d = dialog({
+                title:'提示',
+                content:'设置宽高',
+                width:320, //宽高可以设置rem
+                height:100,
+                okValue:'确定',
+                ok:function(){
+                    
+                }
+            });
+            d.show();
+        };
+        //test6();
+
+        function test7(){
+            var d = dialog({
+                title:'提示',
+                content:'这是一个禁止关闭的对话框，并且没有取消按钮',
+                cancel:function(){
+                    return false;
+                },
+                cancelDisplay:false //如果不加上这句，会有取消按钮
+            });
+            d.show();
+        };
+        //test7();
+
+        function test8(){
+            var d = dialog({
+                //自定义按钮
+                title:'提示',
+                content:'自定义按钮',
+                button:[
+                    {
+                        value:'确定一',
+                        callback:function(){
+                            console.log("确定一");
+                        },
+                        autofocus:true //给按钮设置焦点,变颜色
+                    },
+                    {
+                        value:'确定二',
+                        callback:function(){
+                            console.log("确定二");
+                        },
+                        autofocus:true
+                    },{
+                        value:'无效按钮',
+                        disabled:true
+                    },{
+                        value:'关闭我' //不加回调函数默认直接点击关闭
+                    }
+                ]
+            });
+            d.show();
+            
+        };
+        //test8();
+
+        function test9(){
+            dialog({
+                skin:'min-dialog tips' //设置对话框额外的className参数，多个使用空格隔开，这个class在这里是代表转圈
+            }).show();
+        };
+        //test9();
+
+        function test10(){
+            var d =dialog({
+                title:'提示',
+                content:'提示内容',
+                padding: 20,
+                fixed: true, //默认为false,开启固定定位
+                quickClose:true, // 点击空白处快速关闭
+                button:[
+                    {
+                        value:"确定",
+                        callback:function(){},
+                        autofocus:true
+                    }
+                ],
+                zIndex:100
+            });
+            d.show();
+        };
+        //test10();
+
+        function test11(){
+            //onshow 对话框打开的事件
+            //onclose 对话框关闭的事件
+            //onbeforeremove 对话框销毁之前的事件
+            //onremove 对话框销毁事件
+            //onfocus 对话框获取焦点事件
+            //onblur 对话框失去焦点事件
+            //onreset 对话框位置重置事件
+
+            var d = dialog({
+                title:'提示',
+                content:'提示内容',
+                onshow:function(){
+                    console.log("对话框打开了");
+                },
+                onclose:function(){
+                    console.log("对话框关闭了！");
+                }
+            });
+            d.show();
+        };
+        //test11();
+
+        function test12(){
+            //id
+            //设定对话框唯一表示
+            //可防止重复ID对话框弹出
+            //支持使用dialog.get(id)获取某个对话框的接口
+            var d = dialog({
+                title:'提示',
+                content:'提示内容',
+                id:'id-dialog'
+            });
+            d.show();
+            dialog.get("id-dialog").title("zywds");
+        };
+        //test12();
+
+        function test13(){
+            //returnValue 获取对话框返回值
+            var d =dialog({
+                title:'消息',
+                content:'<input id="property-returnValue-demo" value="1" />',
+                ok:function(){
+                    var value = $('#property-returnValue-demo').val();
+                    this.close(value);
+                    this.remove();
+                }
+            });
+            d.addEventListener('close',function(){
+                alert(this.returnValue);
+            });
+            d.show();
+        };
+        //test13();
+
+        function test14(){
+            //直接显示遮罩效果
+            //相对于d.showModal();
+            dialog({
+                modal:true
+            }).show();
+        };
+        test14();
+
+    </script>
+</body>
+</html>

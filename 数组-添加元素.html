@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var array = [1,2,3];
+        //添加到末尾
+        array.push(4,5);
+        //添加到开始
+        array.unshift(-1,0);
+        //添加到中间
+        array.splice(6,1,6,7,8); //表示从第几位开始插入，第二个变量是删除第几位后的几个元素，0表示不删除
+        for (var i in array){
+            console.log(array[i]);
+        }
+
+
+
+    </script>
+</body>
+</html>

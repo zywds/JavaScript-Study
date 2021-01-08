@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="div1"></div>
+    <script src="../js/template-web.js"></script>
+    <script type="text/html" id="testFather">
+        <h1>{{title}}</h1>
+        <!-- 导入子模版 -->
+        {{include 'testChild'}}
+    </script>
+    <script type="text/html" id="testChild">
+        <ul>
+            {{each list}}
+                <li>{{$index}}:{{$value.name}}:{{$value.size}}</li>
+            {{/each}}   
+        </ul>
+        
+    </script>
+
+
+    <script>
+        var data = {
+            title:'artTemplate',
+            isFlag:true,
+            list:[
+                {name:"苹果",size:12},
+                {name:"香蕉",size:33.2},
+                {name:"桃子",size:18}
+            ]
+        };
+        document.getElementById("div1").innerHTML = template('testFather',data);
+
+
+    </script>
+</body>
+</html>

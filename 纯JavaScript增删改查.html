@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        h1{
+            margin-left: 2.5%;
+        }
+        table{
+            width: 95%;
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+        th,td{
+            border: 1px solid red;
+            height: 20px;
+            text-align: center;
+            vertical-align: bottom;;
+        }
+        fieldset{
+            width: 60%;
+            margin-left: 2.5%;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+        fieldset>p{
+            margin-bottom: 10px;
+            margin-left: 10px;
+
+        }
+        fieldset>p *{
+            vertical-align: bottom;
+        }
+        fieldset>p:last-child{
+            text-align: center;
+        }
+        input[type=button]{
+            width: 100px;
+            height: 20px;
+        }
+        
+        
+        
+
+
+
+    </style>
+</head>
+<body>
+    <h1>商品管理</h1>
+    <table>
+        <thead>
+            <tr>
+                <th><input type="checkbox" name="chkFather">全选</th>
+                <th>商品编号</th>
+                <th>名称</th>
+                <th>价格</th>
+                <th>上货日期</th>
+                <th>是否下架</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+            <!-- <tr>
+                <td><input type="checkbox"></td>
+                <td>00000001</td>
+                <td>小米电脑</td>
+                <td>6666.00</td>
+                <td>2017-08-08</td>
+                <td><input type="checkbox"></td>
+                <td><a>删除</a>&nbsp;&nbsp;<a>修改</a>&nbsp;&nbsp;<a>详细</a></td>
+            </tr> -->
+        </tbody>
+    </table>
+    <fieldset>
+        <legend>商品详细</legend>
+        <p>
+            <label>商品编号</label>
+            <input type="text" name="no" id="no">
+            <span>*只能输入9位</span>
+        </p>
+        <p>
+            <label>商品名称</label>
+            <input type="text" name="name" id="name">
+            <span>*长度只能是1-30位</span>
+        </p>
+        <p>
+            <label for="price">商品价格</label>
+            <input type="text" name="price" id="price">
+            <span>*只能输入正数，如0.98</span>
+        </p>
+        <p>
+            <label for="date">上货日期</label>
+            <input type="date" name="date" id="date">
+            <span>*必须选择</span>
+        </p>
+        <p>
+            <label for="sfxj">是否下架</label>
+            <input type="radio" value="是" name="sfxj">是  <input type="radio" value="否" name="sfxj">否
+        </p>
+        <p>
+            <input type="button" name="inputAdd" id="inputAdd" value="添加">
+            <input type="button" name="inputAdd" id="inputUpdate" value="修改">
+            <input type="button" name="inputAdd" id="inputUpdates" value="批量删除">
+            <input type="button" name="inputAdd" id="btnExec" value="正则">
+        </p>
+    </fieldset>
+
+
+
+    <script>
+        var dbApp={
+            editId:'',
+            datas:[
+                {
+                    no:'111111111',
+                    name:'苹果',
+                    price:'12.3',
+                    date:'2017-09-09',
+                    sfxj:'是'
+                },
+                {
+                    no:'222222222',
+                    name:'西瓜',
+                    price:'14.9',
+                    date:'2018-10-09',
+                    sfxj:'否'
+                },
+                {
+                    no:'333333333',
+                    name:'圣女果',
+                    price:'14',
+                    date:'2020-09-09',
+                    sfxj:'否'
+                }
+            ],
+            init:function(){
+                this.selectAll();
+                this.event();
+            },
+            event:function(){
+                //方法一
+                document.getElementById("inputAdd").onclick = function(){
+                    dbApp.btnAdd();
+                };
+                //添加
+                // document.addEventListener("click",function(){
+                //     dbApp.btnAdd();
+                // });
+                //修改
+                document.getElementById("inputUpdate").onclick = function(){
+                    dbApp.btnUpdate();
+                };
+                document.getElementsByName("chkFather")[0].onclick = function(){
+                    dbApp.chkFather();
+                };
+                document.getElementById("inputUpdates").onclick = function(){
+                    dbApp.inputUpdates();
+                };
+                document.getElementById("btnExec").onclick = function(){
+                    dbApp.exec();
+                }
+
+            },
+            selectAll:function(){
+                // <tr>
+                // <td><input type="checkbox"></td>
+                // <td>00000001</td>
+                // <td>小米电脑</td>
+                // <td>6666.00</td>
+                // <td>2017-08-08</td>
+                // <td><input type="checkbox"></td>
+                // <td><a>删除</a>&nbsp;&nbsp;<a>修改</a>&nbsp;&nbsp;<a>详细</a></td>
+                // </tr>
+                //渲染之前先清空表格tr
+                var trs = document.getElementById("tbody").children;
+                for(var i = trs.length - 1;i >= 0;i--){
+                    document.getElementById("tbody").removeChild(trs[i]);
+                };
+
+                //遍历数组
+                //for (var i in this.datas){this.datas[i]}
+                for(var i = 0;i <this.datas.length; i++){
+                    //console.log(this.datas[i]);
+                    var tr = document.createElement("tr");
+                    var td = document.createElement("td");
+                    //var input = document.createElement("input");
+                    //<input type="button" name="inputAdd" id="inputAdd" value="添加">
+                    td.innerHTML = "<input type='checkbox' name='chkChild' onclick=dbApp.chkChild() />";
+                    // input.setAttribute("type","checkbox");
+                    // input.setAttribute("name","chkChild");
+                    // td.appendChild(input);
+                    tr.appendChild(td);
+
+                    var td = document.createElement("td");
+                    td.innerText = this.datas[i].no;
+                    tr.appendChild(td);
+
+                    var td = document.createElement("td");
+                    td.innerText = this.datas[i].name;
+                    tr.appendChild(td);
+
+                    var td = document.createElement("td");
+                    td.innerText = this.datas[i].price;
+                    tr.appendChild(td);
+
+                    var td = document.createElement("td");
+                    td.innerText = this.datas[i].date;
+                    tr.appendChild(td);
+
+                    var td = document.createElement("td");
+                    var input = document.createElement("input");
+                    input.setAttribute("type","checkbox");
+                    
+                    if (this.datas[i].sfxj === '是'){
+                        //console.log(this.datas[i].sfxj);
+                        //input.setAttribute("checked",true);
+                        input.checked = true;
+                    }
+                    input.disabled = true;
+                    td.appendChild(input);
+                    tr.appendChild(td);
+
+                    var td = document.createElement("td");
+                    td.innerHTML = "<a onclick=dbApp.delete(" + i + ") >删除</a>&nbsp;&nbsp;<a onclick=dbApp.edit(" + i + ")>编辑</a>&nbsp;&nbsp;<a>详细</a>";
+                    tr.appendChild(td);
+
+                    document.getElementById("tbody").appendChild(tr);
+                    
+                };
+                
+            },
+            btnAdd:function(){
+                //console.log("btnAdd");
+                var no = document.getElementById("no").value;
+                var name = document.getElementById("name").value;
+                var price = document.getElementById("price").value;
+                var date = document.getElementById("date").value;
+                var sfxjs = document.getElementsByName("sfxj");
+                var sfxj;
+                for (var i = 0;i<sfxjs.length;i++){
+                    if(sfxjs[i].checked){
+                        sfxj = sfxjs[i].value;
+                    }
+                }
+                //往数组中添加值
+                var data = {
+                    "no":no,
+                    name:name,
+                    price:price,
+                    date:date,
+                    sfxj:sfxj
+                };
+                dbApp.datas.push(data);
+                console.log(dbApp.datas);
+                dbApp.selectAll();
+            },
+            delete:function(i){
+                //不能传入this,用that替换
+                //删除数组中对应数据
+                // for (var i = 0;i<dbApp.datas.length;i++){
+                //     if (dbApp.datas[i].no == no){
+                //         dbApp.datas.splice(i,1);
+                //     };
+                // };
+                dbApp.datas.splice(i,1);
+                dbApp.selectAll();
+                
+            },
+            edit:function(i){
+                //根据索引获取数组中的数据
+                dbApp.editId = i;
+                var data = dbApp.datas[i];
+                console.log(data);
+                //将值写入到商品详细中
+                document.getElementById("no").value = data.no;
+                document.getElementById("name").value = data.name;
+                document.getElementById("price").value = data.price;
+                document.getElementById("date").value = data.date;
+                if(data.sfxj == '是'){
+                    document.getElementsByName("sfxj")[0].checked = true;
+                } else{
+                    document.getElementsByName("sfxj")[1].checked = true;
+                }
+
+
+            },
+            btnUpdate:function(){
+                console.log(dbApp.editId);
+                var no = document.getElementById("no").value;
+                var name = document.getElementById("name").value;
+                var price = document.getElementById("price").value;
+                var date = document.getElementById("date").value;
+                var sfxjs = document.getElementsByName("sfxj");
+                var sfxj;
+                for (var i = 0; i < sfxjs.length; i ++){
+                    if (sfxjs[i].checked){
+                        sfxj = sfxjs[i].value;
+                    }
+                };
+                //修改数组
+                date = {
+                    no:no,
+                    name:name,
+                    price:price,
+                    date:date,
+                    sfxj:sfxj
+                };
+                dbApp.datas[dbApp.editId] = date;
+                dbApp.selectAll();
+                
+            },
+            chkFather:function(){
+                console.log("chkFather");
+                //判断是否选中，如果选中全选，否则取消全选
+                var chkFather = document.getElementsByName("chkFather")[0];
+                if (chkFather.checked){
+                    var chkChild = document.getElementsByName("chkChild");
+                    for (var i = 0;i < chkChild.length;i ++){
+                        chkChild[i].checked = true;
+                    }
+                } else{
+                    var chkChild = document.getElementsByName("chkChild");
+                    for (var i = 0;i < chkChild.length;i ++){
+                        chkChild[i].checked = false;
+                    }
+                }
+            },
+            chkChild:function(){
+                console.log("chkChild");
+                //如果有一个不是全选，取消父元素的全选，否则，勾上父元素的全选
+                var chkChild = document.getElementsByName("chkChild");
+                var chkChildLength = 0;
+                for (var i = 0;i < chkChild.length; i ++){
+                    if (chkChild[i].checked){
+                        chkChildLength ++;
+                    }
+                }
+                if (chkChildLength == chkChild.length){
+                    document.getElementsByName("chkFather")[0].checked = true;
+                } else{
+                    document.getElementsByName("chkFather")[0].checked = false;
+                }
+            },
+            inputUpdates:function(){
+                //批量删除
+                //获取选中的索引
+                var chkChild = document.getElementsByName("chkChild");
+                for (var i = chkChild.length - 1;i >= 0;i --){
+                    if (chkChild[i].checked){
+                        console.log(i);
+                        dbApp.datas.splice(i,1);
+                    }
+                }
+                dbApp.selectAll();
+            },
+            exec:function(){
+                var no = document.getElementById("no").value;
+                var name = document.getElementById("name").value;
+                var price = document.getElementById("price").value;
+                var date = document.getElementById("date").value;
+                //判断是否有选中
+                console.log(/[\dA-Za-z]{9}/igm.test(no));
+                //判断正数，包含小数
+                /**
+                 * /^(([0-9]+[\.]?[0-9]+)|[1-9])$/
+                 * ^(([0-9]+[\.]?[0-9]+)|[1-9])$
+                 * (([0-9]+[\.]?[0-9]+)|[1-9])
+                 * (red|blue|green)	查找任何指定的选项。
+                 * ^n	匹配任何开头为 n 的字符串。
+                 * n?	匹配任何包含零个或一个 n 的字符串。
+                 * n+	匹配任何包含至少一个 n 的字符串。
+                 * n$	匹配任何结尾为 n 的字符串。
+                 * ([0-9]+[\.]?[0-9]+)|[1-9]
+                 * 01.00
+                */
+
+                //console.log(/^(([0-9]+[\.]?[0-9]+)|[1-9])$/igm.test(price)); //如00.11判定有误
+                //判断正数，小数点后两位
+
+                /**
+                 * /^(?!0+(?:\.0+)?$)(?:[1-9]\d*|0)(?:\.\d{1,2})?$/igm
+                 * i	执行对大小写不敏感的匹配。
+                 * g	执行全局匹配（查找所有匹配而非在找到第一个匹配后停止）。
+                 * m	执行多行匹配。
+                 * ^(?!0+(?:\.0+)?$)(?:[1-9]\d*|0)(?:\.\d{1,2})?$
+                 * ^n	匹配任何开头为 n 的字符串。
+                 * n$	匹配任何结尾为 n 的字符串。
+                 * (?!0+(?:\.0+)?$)(?:[1-9]\d*|0)(?:\.\d{1,2})?
+                 * 分为三部分，分别解析
+                 * 1、(?!0+(?:\.0+)?$)   不以1个或多个0开头，以.一个或多个0结尾
+                 * ?!n	匹配任何其后没有紧接指定字符串 n 的字符串。
+                 * n+	匹配任何包含至少一个 n 的字符串。
+                 * n?	匹配任何包含零个或一个 n 的字符串。
+                 * (?=)会作为匹配校验bai，但不会出现在du匹配结zhi果字符串里面
+                 * (?:)会作bai为匹配校验，并出du现在匹配结果字符zhi里面，它跟(...)不同的地方在于，不作为子匹配返回。
+                 * var data = 'windows 98 is ok';
+                 * data.match(/windows (?=\d+)/);  // ["windows "]
+                 * data.match(/windows (?:\d+)/);  // ["windows 98"]
+                 * data.match(/windows (\d+)/);    // ["windows 98", "98"]
+                 * 
+                */
+                console.log(/^(?!0+(?:\.0+)?$)(?:[1-9]\d*|0)(?:\.\d{1,2})?$/igm.test(price));
+
+            }
+        };
+        dbApp.init();
+
+
+
+
+    </script>
+</body>
+</html>

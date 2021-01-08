@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function test1(){
+            var reg1 = /\d{2}/igm;
+            var reg2 = new RegExp("\d{2}","igm");
+            console.log(reg1.test("1d2d3"));//判断是否符合正则
+            console.log(reg1.exec('12d3d43'));//["12", index: 0, input: "12d3d43", groups: undefined]
+        };
+        test1();
+        function test2(){
+            var reg1 = /\d{2}/igm;
+            console.log("12d123d1d12d".search(reg1)); //位置 第一次匹配成功的索引 0
+            console.log("12d123d1d12d".match(reg1)); //找到的所有集合  ["12", "12", "12"]
+            //删除所有数字
+            console.log("12d123d1d12d".replace(reg1,""));
+
+            //所有数字增加大括号，反向引用$组号，括号用于分组
+            console.log("kjds23sd9we56sdoi1we780we98sd".replace(/(\d+)/igm,"\{$1\}"));
+
+            console.log("kjds23sd9we56sdoi1we780we98sd".split(/[w\d]+/));//变成数组
+
+        };
+        test2();
+
+
+
+
+    </script>
+</body>
+</html>

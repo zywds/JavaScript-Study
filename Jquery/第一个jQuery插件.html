@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button>按钮1</button><br>
+    <button>按钮2</button><br>
+    <script src="../js/jquery-1.11.3.js"></script>
+    <script>
+        //倒装IIFE
+        ;(function(factory){
+            factory(window,jQuery,document);
+        }(function(window,$,document){
+            //对象方式拓展jQuery
+            $.fn.extend({
+                addWidth:function(length){
+                    $.each(this,function(index,obj){
+                        $("<span/>").html("+").css("cursor","pointer").click(function(){
+                            $(obj).width($(obj).width() + (length||1));
+                        }).insertAfter(obj);
+                    });
+                }
+            });
+            //第二种方式
+            // $.fn.addWidth = Function(length){
+
+            // };
+
+        }));
+        $("button").addWidth();
+
+
+    </script>
+</body>
+</html>

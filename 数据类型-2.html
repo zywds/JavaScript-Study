@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var user = {
+            name:'zywds',
+            age:21
+        }
+        //typeof 遇到null,object返回 object
+        console.log(typeof(user)); //object
+        console.log(typeof(null)); //object
+        console.log(typeof(undefined)); //undefined
+        console.log(typeof(user.address)); //undefined
+
+        //undefined放在if中是false
+        if(user.address){
+            console.log('true');
+        }else{
+            console.log('false');
+        }
+
+        //为false的情况
+        //0,+0,-0,NaN,"",Null,Undefined,
+        //object总是为真
+        var i;
+        console.log(!!""); //false
+        console.log(!!0); //false
+        console.log(!!+0);//false
+        console.log(!!-0);//false
+        console.log(!!NaN); //false
+        console.log(!!i);//false
+        console.log(!typeof(i)); //false 暂时不必理解，只需要知道为false的情况即可
+        console.log(false);//false
+        console.log(!!undefined);//false
+        console.log(isNaN("five"));//true
+        console.log(isNaN(5));//false  is Not a Number 是否不是一个数字
+
+
+
+
+
+
+    </script>
+</body>
+</html>

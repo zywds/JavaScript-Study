@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="../js/jquery-1.11.3.js"></script>
+    <script>
+        function f(){
+            var i = 1;
+            return ++i,i += 1,i+=2;//返回合计的结果，最后一个表达式才是返回，前面可进行运算
+        };
+        console.log(f());
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //1、函数声明语法定义
+        function functionName(arg1){
+
+        };
+        //2、函数表达式定义
+        var functionName2 = function(arg1){
+
+        };
+        //3、构造函数定义
+        //可向构造函数中传入任意数量的参数，传入的最后一个参数会作为函数体，而其它参数会作为参数传入函数中
+        //记住一定为字符串类型
+        var functionName3 = new Function("arg1","return arg1");
+        console.log(functionName3(1));
+
+        //函数是引入值类型，所以函数名仅仅是指向函数的指针，当使用函数名去赋值
+        //给另一个变量名是，仅仅是复制一个指针，即另一个变量设置为null时，另一个变量的指针消除，不会影响本身
+        var a = b = function(arg1){
+            return arg1;
+        }
+        a = null;
+        //console.log(a(1));
+        console.log(b(1));
+
+
+
+
+
+    </script>
+</body>
+</html>

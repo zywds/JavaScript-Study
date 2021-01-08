@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //所有函数都是构造器
+        //1、所有的函数/构造器都有prototype属性，用于指向原型对象
+        //2、所有的函数既是构造器又是对象
+        //3、所有的对象都拥有__proto__非标准属性
+        //4、有第二点可知，函数也是对象，所有也具有__proto__非标准属性
+        //5、所有函数(构造器)的__proto__都指向Function.prototype对象
+        //6、所有对象的__proto__都指向其构造器的prototype对象,比如：1、对象被new出来，2、函数对象指向Function.prototype对象
+        //7、所有函数都是由Function构造出来的，Function自己构造了自己，Object是由Function构造出来的，Function是顶层构造器
+        //8、所有对象的最终原型对象都指向了Object.prototype对象，Object的prototype对象的__proto__属性指向NULL
+        //9、所有prototype原型对象中的constructor属性都指向其构造器
+        //10、对象在查找成员时，先查找对象自己的所有成员，在查找构造器的原型中的成员，向上再查找父类的成员，最终查询Object成员
+        //11、函数的constructor指向了Function,也就是函数的构造器
+        //12、任何函数的constructor都指向Function,Function自己也是如此 $.constructor.__proto__===Function.prototype
+        function Foo(){};
+        var f1 = new Foo();
+        f1.__proto__===Foo.prototype //true
+        Foo.prototype.__proto__===Object.prototype //true
+        Foo.__proto__===Function.prototype //true
+        Object.prototype.__proto__===null //true
+        f1.__proto__.__proto__.__proto__==null //true
+        var obj1 = new Object //true
+        obj1.__proto__===Object.prototype //true
+        obj1.__proto__.__proto__===null //true
+        Object.__proto__===Function.prototype //true
+        Function.__proto__===Function.prototype //true
+        Function.prototype.__proto__===Object.prototype //true
+        Function.__proto__.__proto__.__proto__===null //true
+
+
+
+
+
+    </script>
+</body>
+</html>

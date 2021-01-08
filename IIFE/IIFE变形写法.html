@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        ;(function(n){
+            console.log(n);
+            //认为这里有30000代码
+        }(100));
+
+        ;(function(exp){
+            exp(100);
+        }(function(n){
+            console.log(n);
+            //认为这里有30000代码
+        }));
+
+
+
+    </script>
+</body>
+</html>

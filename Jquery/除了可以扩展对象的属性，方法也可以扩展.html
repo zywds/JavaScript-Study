@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="../js/jquery-1.11.3.js"></script>
+    <script>
+        //深拷贝
+        var a ={n:10};
+        var b = a;//引用，b与a同时指向堆中的对象(n:10)
+        b.n = 21;
+        console.log(a); //{n: 21}
+        console.log(b); //{n: 21}
+
+        //深拷贝,通过序列化与反序列化实现对象
+        var c = JSON.stringify(a);
+        console.log(c);//{"n":21}
+        var c = JSON.parse(c);
+        console.log(c); //对象 {"n":21}
+        c.n = 30;
+        console.log(a); //{"n":21}
+        console.log(b); //{"n":21}
+        console.log(c); //{n: 30}
+
+        //深拷贝：通过$.extend
+        var d = $.extend(true,{},a);
+        d.n = 40;
+        console.log(a); //{n: 21}
+        console.log(d); //{n: 40}
+
+
+
+    </script>
+</body>
+</html>

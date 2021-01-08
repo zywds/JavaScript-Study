@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        table{
+            width: 95%;
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+        th,td{
+            border: 1px solid red;
+            height: 20px;
+            text-align: center;
+            vertical-align: bottom;
+        }
+        fieldset{
+            width: 40%;
+            margin-left: 2.5%;
+            margin-top: 30px;
+
+        }
+        p{
+            margin-left: 1%;
+            margin-top: 1%;
+        }
+        /* p:last-child{
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+        }
+        input[type=button]{
+            width: 80px;
+            height: 20px;
+            text-align: center;
+            line-height: 20px;
+            
+            
+        } */
+        legend{
+            font-size: 19px;
+            font: bold;
+        }
+        p input{
+            width: 400px;
+            height: 30px;
+        }
+        p label{
+            font: bold;
+            font-size: 16px;
+        }
+        a{
+            cursor: pointer;
+        }
+
+
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>编号</th>
+                <th>名称</th>
+                <th>价格</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+            
+        </tbody>
+    </table>
+    <input type="button" value="弹出框" id="btnDialog" style="margin-top: 10px;margin-left: 2.5%;">
+    <fieldset id="fieldset" style="display: none;">
+        <legend>商品管理</legend>
+        <p>
+            <label for="id">编号</label>
+            <input type="text" name="id" id="id" autocomplete="off">
+        </p>
+        <p>
+            <label for="name">名称</label>
+            <input type="text" name="name" id="name" autocomplete="off">
+        </p>
+        <p>
+            <label for="price">价格</label>
+            <input type="text" name="price" id="price" autocomplete="off">
+        </p>
+
+    </fieldset>
+
+    <script src="../js/template-web.js"></script>
+    <script src="../js/jquery-1.11.3.js"></script>
+    <!-- 放在jQuery后面 -->
+    <script src="../js/dialog.js"></script>
+
+    <!-- artTemplate渲染 -->
+    <script type="text/html" id="artTemplate1">
+        {{each list pdt index}}
+            <tr>
+                <td>{{pdt.id}}</td>
+                <td>{{pdt.name}}</td>
+                <td>{{pdt.price}}</td>
+                <!-- <td><a class='edit' data-id={{pdt.id}}>编辑</a>&nbsp;&nbsp;&nbsp;<a class='del'>删除</a></td> -->
+                <td><a class='edit' onclick=app.edit({{pdt.id}})>编辑</a>&nbsp;&nbsp;&nbsp;<a class='del' data-id={{pdt.id}}>删除</a></td>
+            </tr>
+        {{/each}}
+        
+    </script>
+
+    <script>
+        
+
+        var app = {
+            init:function(){
+                this.selectAll();
+                this.event();
+            },
+            event:function(){
+                $("#btnDialog").click(function(){
+                    console.log("11");
+                    app.showDialog();
+                    dialog.get("dialog1").showModal();
+                });
+                //$('#tbody').on("click",'.edit',{},app.edit);
+                $("#tbody").on("click",'.del',{},app.del);
+
+            },
+            showDialog(){
+                //定义dialog弹出
+                dialog({
+                    id:"dialog1",
+                    title:'商品管理',
+                    content:$('#fieldset').html(),
+                    modal:true, //遮罩效果
+                    quickClose:true,
+                    width:400,
+                    height:200,
+                    onclose:function(){
+                        dialog.get("dialog1").close().remove();
+                    },
+                    button:[
+                        {
+                            value:"添加",
+                            callback:function(){
+                                id = $(".ui-dialog #id").val();
+                                name = $(".ui-dialog #name").val();
+                                price = $(".ui-dialog #price").val();
+                                console.log("id:" + id +',name:' + name +',price' + price);
+                                return false;
+                            },
+                            autofocus:true
+                        },
+                        {
+                            value:"修改",
+                            callback:function(){
+                                $(".ui-dialog #id").val("111");
+                                $(".ui-dialog #name").val('222');
+                                $(".ui-dialog #price").val('333');
+                                return false;
+                            },
+                            autofocus:true
+                        }
+                    ]
+                });
+            },
+            selectAll:function(){
+                $.ajax({
+                    type:"get",
+                    url:"ajax-2.json",
+                    contentType:"application/json;charset=utf8",
+                    dataType:"json",
+                    success:function(data){
+                        list = data;
+                        document.getElementById("tbody").innerHTML = template("artTemplate1",{list:data});
+                        //console.log(data);
+                    }
+                });
+            },
+            add:function(){
+                obj = {
+                    id:$("#id").val(),
+                    name:$("#name").val(),
+                    price:$("#price").val()
+                };
+                console.log(obj);
+            },
+            edit:function(id){
+                console.log("11");
+                //console.log($(this).data("id"));
+                console.log(id);
+                //展示弹出框
+                app.showDialog();
+                dialog.get("dialog1").showModal();
+
+
+            },
+            del:function(){
+                console.log($(this).data("id"));
+                //利用属性获取
+                console.log($(this).attr("data-id"));
+            }
+        };
+        app.init();
+        
+    </script>
+</body>
+</html>

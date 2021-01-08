@@ -1,0 +1,33 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Chrome against localhost",
+            "url": "http://localhost:8080",
+            "webRoot": "${workspaceFolder}"
+        }//,
+        // {
+        //     "name":"使用本机 Chrome调试",
+        //     "type":"chrome",
+        //     "request":"launch",
+        //     "file": "${workspaceFolder}/ajax/ajax-1.html",
+        //     "runtimeExecutable": "C:\\Users\\Admirator\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe",
+        //     //需要跨域打开以下注释
+        //     // "runtimeArgs": [
+        //     //     "--disable-web-security",
+        //     //     "--user-data-dir=${workspaceRoot}\\UserDataDir",
+        //     // ],
+        //     "sourceMaps": true,
+        //     "webRoot": "${workspaceFolder}",
+        //     //"preLaunchTask": "bulid",
+        //     "userDataDir": "${tmpdir}",
+        //     "port": 5433
+        // }
+    ]
+}

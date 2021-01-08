@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+        //1、当前获得焦点元素
+        //为元素设置焦点，可以用element.focus()方法
+        var x = document.activeElement.tagName; //Button
+        //2、向文档添加事件句柄
+        //document.addEventListener()
+        //可使用document.removeEventListener()移除句柄
+        document.addEventListener("click",function() {
+            document.getElementById("demo").innerHTML = 'hello world!'; 
+        });
+        //3、从另外一个文档中获取一个节点，节点可以是任何类型，节点下的所有子节点都会获取到，节点及子节点会在原文档中删除
+        //adoptNode() 
+        document.adoptNode(document.getElementById("demo"));
+        //4、把一个节点从另一个文档复制到该文档，但原文档中的节点不会删除
+        //importNode() ,如果第二个值设置为true，还要复制该节点的所有子孙节点，递归复制
+        document.adoptNode(document.getElementById("demo"),true);
+        //5、拷贝一个节点到另一个节点
+        //cloneNode() 拷贝所有的属性和值，原文档中的节点不会删除，如果第二个值设置为true，还要复制该节点的所有子孙节点，递归复制
+        var node = document.getElementById('demo').cloneNode(true);
+        document.getElementById('demo1').appendChild(node);
+        //6、获取文档的基础URL，除了IE浏览器，其它主流浏览器都支持
+        //document.baseURI; 
+        //7、返回文档的body元素
+        document.body.style.backgroundColor = 'yellow';
+        //8、获得与当前文档相关的所有cookies
+        document.write(document.cookie);
+        //9、创建一个指定名称的属性
+        var attr = document.createAttribute("class");
+        attr.value = "demoClass";
+        document.getElementById("demo").setAttributeNode(attr);
+        //10、创建注释节点，并插入HTML文档
+        var c = document.createComment("我是注释节点");
+        document.body.appendChild(c);
+        //11、创建元素节点
+        var btn = document.createElement("button");
+        //12、创建文本节点
+        var t = document.createTextNode("点击按钮");
+        btn.appendChild(t);
+        //13、返回与文档相关的文档类型声明
+        document.doctype;
+        //14、返回文档的根节点
+        document.documentElement;
+        //15、返回文档的域名
+        document.domain; //www.runoob.com
+        //16、返回对文档中所有IMAGE对象的引用
+        document.images;
+        //17、返回文档最后被修改的日期和时间
+        document.lastModified; //12/26/2020 20:50:11
+        //18、返回文档中匹配指定的CSS选择器的第一元素
+        document.querySelector();
+        //19、返回文档状态(载入中....)
+        document.readyState;
+        //移除文档中的事件句柄
+        document.removeEventListener("click",function() {
+            document.getElementById("demo").innerHTML = 'hello world!'; 
+        });
+        //返回当前文档的标题
+        document.title;
+        //向文档写HTML表达式或JavaScript代码
+        document.write();
+        //等同于write()方法，不同的是在每个表达式之后写一个换行符
+        document.writeln();
+
+
+
+
+
+    </script>
+</body>
+</html>

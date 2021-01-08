@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //String对象方法
+        //anchor() 创建HTML锚
+        var str1 = '站与为';
+        console.log(str1.anchor("zyw"));//<a name="zyw">站与为</a>
+        //big()
+        var str2 = "zywds";
+        console.log(str2.big()); //<big>zywds</big>
+        //blink() 显示闪动字符串
+        console.log(str2.blink());
+        document.write(str2.blink()); //<blink>zywds</blink>
+        //bold() 使用粗体显示字符串
+        console.log(str2.bold());//<b>zywds</b>
+        //charAt() 返回指定位置的字符串
+        console.log(str2.charAt(0)); //z
+        //charCodeAt() 返回指定位置的Unicode编码
+        console.log(str2.charCodeAt(0)); //122
+        //concat() 连接字符串
+        console.log(str2.concat()); //zywds
+        //fixed() 以打字机文本显示字符串
+        console.log(str2.fixed()); //<tt>zywds</tt>
+        //使用指定颜色来显示字符串
+        console.log(str2.fontcolor("zyw")); //<font color="zyw">zywds</font>
+        console.log(str2.fontsize("zyw")); //<font size="zyw">zywds</font>
+        //indexOf() 检索字符串 返回某个指定的字符串值再字符串中首次出现的位置
+        console.log(str2.indexOf('y')); //1
+        console.log(str2.indexOf('o')); //-1
+        //italics() 使用斜体显示字符串
+        console.log(str2.italics()); //<i>zywds</i>
+        //lastIndexOf() 从后向前搜索字符串
+        console.log(str2.lastIndexOf('w')); //2
+        //link() 将字符串显示为连接
+        console.log(str2.link('zyw')); //<a href="zyw">zywds</a>
+        //用本地特定的顺序来比较两个字符串 sort中也用到,用于比较字符串
+        var arr1 = ['12','333','55'];
+        console.log(arr1.sort(function(a,b){return a-b})); // ["12", "55", "333"]
+        var arr2 = ['a','c','b'];
+        console.log(arr2.sort(function(a,b){return a.localeCompare(b)})); // ["a", "b", "c"]
+        //search() 正则，返回第一次成功匹配的索引
+        var str3 = '12d34d56d';
+        var reg = /\d{2}/igm;
+        console.log(str3.search(reg)); //0
+        //match 返回找到的值的集合
+        console.log(str3.match(reg)); //["12", "34", "56"]
+        //replace() 替换与正则表达式匹配的值,可以当普通的字符串用，也可以和正则结合用
+        console.log(str3.replace(reg,"")); //ddd
+        console.log(str3.replace('12','zywds')); //zywdsd34d56d
+        //slice() 提取字符串的片段，并在新字符串中返回被提取的部分,从开始索引到结束位置
+        //console.log(str2.slice(1)); //ywds
+        console.log(str2.slice(1,2)); //y
+        //small() 使用小号来显示字符串
+        console.log(str2.small()); //<small>zywds</small>
+        //split() 吧字符串分割为字符串数组
+        console.log(str2.split('')); // ["z", "y", "w", "d", "s"]
+        //strike() 使用删除线来显示字符串
+        console.log(str2.strike()); //<strike>zywds</strike>
+        //sub() 吧字符串显示为下标
+        console.log(str2.sub()); //<sub>zywds</sub>
+        //substr() 从起始索引字符串中指定数目的字符
+        console.log(str2.substr(0,2)); //zy
+        //substring()提取字符串两个指定索引号之间的字符
+        console.log(str2.substring(0,2)); //zy
+        //sup() 把字符串显示为上标
+        console.log(str2.sup()) //<sup>zywds</sup>
+        //toString() 返回字符串
+        console.log(str2.toString()); //zywds
+        console.log(arr1.toString()); //12,55,333
+        //toLocaleLowerCase() 把字符串转换为小写
+        console.log(str2.toLocaleLowerCase()); //zywds
+        //toLowerCase()
+        console.log(str2.toLowerCase()); //zywds
+
+        //toLocalUpperCase() //把字符串转换为大写
+        console.log(str2.toLocaleUpperCase()); //ZYWDS
+        //toUpperCase()
+        console.log(str2.toUpperCase()); //ZYWDS
+
+
+    </script>
+</body>
+</html>

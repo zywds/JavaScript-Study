@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var array1 = [1,2,3,4,5];
+        var array2 = [6,7,8,9,10];
+        //截取  从指定位置开始截取，后面可以加上截取的数量，如果不加，表示
+        //截取到最后一个
+        console.log(array1.slice(2));
+        console.log(array2.slice(2));
+        //合并
+        var array3 = array1.concat(array2,"a","b");
+        console.log(array3);
+
+        //以下相当于拷贝
+        array4 = array1.slice(0);
+        array5 = array1.concat();
+        console.log(array4);
+        console.log(array5);
+
+
+    </script>
+</body>
+</html>
