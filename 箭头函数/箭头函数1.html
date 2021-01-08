@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //箭头函数
+        let a = function(m,n){
+            return m + n;
+        };
+        let resultA = new a(1,2);
+        console.log(resultA);
+
+        let a1 = (m,n) => m + n;
+        //箭头函数不能使用构造器方式调用
+        //let resultA1 = new a1(1,2);
+        console.log(a1(1,2));
+        //console.log(resultA1);
+
+        let b = function(m){
+            return m;
+        };
+        let resultB = new b(1);
+        console.log(resultB);
+
+        let b1 = m => m;
+        console.log(b1(1));
+
+        let c = function(){
+            return this;
+        };
+        let resultC = new c();
+        console.log(resultC);
+
+        let c1 = () => this;
+        console.log(c1());
+
+        function f1(){
+            this.n = 5;
+            setTimeout(function(){
+                this.n += 5;
+                console.log(this.n);
+            },1000);
+        };
+        let resultF1 = new f1();
+
+        function f2(){
+            this.n = 5;
+            let that = this;
+            setTimeout(function(){
+                that.n += 5;
+                console.log(that.n);
+            },1000);
+        };
+        let resultF2 = new f2();
+
+        function f3(){
+            this.n = 5;
+            //箭头函数总是指向对象自身
+            setTimeout(() => {
+                this.n += 5;
+                console.log(this);//f3 {n: 10}
+                console.log(this.n);
+            },1000);
+        };
+        let resultF3 = new f3();
+
+
+
+    </script>
+</body>
+</html>
