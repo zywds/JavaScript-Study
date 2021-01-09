@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const {log} = console;
+        //二进制 0b,0B
+        //八进制 0o,0O
+        log(0b111110111 === 503);
+        log(0o767 === 503);//true
+        log(Number('0o10'));//8
+
+        //Number.isFinite()
+        //是否为有限的
+        function a(){
+            Number.isFinite(15);
+            Number.isFinite(0.8);//true
+            Number.isFinite(NaN);//false
+            Number.isFinite(Infinity);//false
+            Number.isFinite(-Infinity);//false
+            Number.isFinite('foo');//false
+            Number.isFinite(true);//false
+
+
+        }
+        //Number.isNaN 
+        //用来检查一个值是否为NaN,如果不是返回false
+        log(Number.isNaN('a'));//false
+        log(Number.isNaN(1));//false
+        log(Number.isNaN(NaN));//true
+        log(Number.isNaN('true'/0));//true
+        log(Number.isNaN('true'/'true'));//true
+
+        //Number.parseInt()  Numnber.parseFloat()
+        log(Number.parseInt('12.2'));//12
+        log(Number.parseFloat('12.33a'));//12.33
+
+        //Numner.isInteger()
+        //判断一个数值是否为整数
+        log(Number.isInteger(25));//true
+        log(Number.isInteger(25.1));//false
+        log(Number.isInteger('a'));//false
+        //记住，有一个特殊情况，JavaScript采用IEEE 754标准
+        //数值存储为64为双精度格式，数值精度最多可以达到53个二进位（1个隐藏位于52个有效位），
+        //如果数值的精度超过这个限度，第54位以及后面的位就会被丢弃，这种情况下
+        //Number.isInteger可能会误判
+        //不允许超过53个二进制位
+        log(Number.isInteger(3.0000000000000002));//true
+        
+
+
+
+
+
+    </script>
+</body>
+</html>

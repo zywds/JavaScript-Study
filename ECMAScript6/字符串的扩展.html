@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const {log:log} = console;
+        function a(){
+            let a = `123gsgrgrr`;
+            let b = `12
+            3455
+            34556
+            `;
+            let c = `hhhkefek${a}`;
+            log(b.trim());
+            log(c);
+            //如果字符串中需要使用反引号，则前面要用斜杠转义
+            let d = `123\\33`;
+            log(d);
+            let greeting = `\`Yo\` World!`;
+            log(greeting);
+            
+        }
+        //a();
+
+        //模板字符串中可以嵌套
+        function b(){
+            const data = [
+                { first: '<Jane>', last: 'Bond' },
+                { first: 'Lars', last: '<Croft>' },
+            ];
+            let tmpl = data=>`
+                    <table>
+                        ${data.map(obj => `
+                            <tr><td>${obj.first}</td></tr>
+                            <tr><td>${obj.last}</td></tr>
+
+                            `).join('')}
+
+                    </table>
+            
+            `;
+            log(tmpl(data));
+                
+            
+        };
+        b();    
+
+
+
+    </script>
+</body>
+</html>

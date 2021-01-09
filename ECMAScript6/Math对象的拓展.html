@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const {log} = console;
+        const {cos,sin} = Math;
+        function add(a,...b){
+            log(a);
+            log(b);
+        }
+        add(1,2,3,4,5);
+        //Math.trunc()
+        //去除一个数的小数部分，返回整数部分
+        log(Math.trunc(4.1));//4
+        log(Math.trunc(-4.1));//-4
+        log(Math.trunc(-4.9));//-4
+        //对于非数值，会先转换为数值
+        log(Math.trunc('12.34'))//12
+        //对于空值和无法截取整数的值，返回NaN
+        log(Number.isNaN(Math.trunc()));//true
+        log(Number.isNaN(Math.trunc(NaN)));//true
+        log(Number.isNaN(Math.trunc('abc')));//true
+        log(Number.isNaN(Math.trunc(undefined)));//true
+
+        //向上取整Math.ceil()
+        //向下取整Math.floor()
+        //按照正常数学逻辑思维来，负数越小越大
+        log(Math.ceil(12.1));//13
+        log(Math.ceil(12.8));//13
+        log(Math.ceil(-1.2));//-1
+        log(Math.floor(12.1));//12
+        log(Math.floor(12.9));//12
+        log(Math.floor(-1.2));//-2
+
+
+        //Math.sign()
+        //判断一个数到底是正数、负数、还是零，对于非数值，会将其转换为数值
+        //参数为正数：+1
+        //参数为负数：-1
+        //参数为0：0
+        //参数为-0：-0
+        //其他值：NaN
+        log(Math.sign(1));//+1
+        log(Math.sign(-1));//-1
+        log(Math.sign(0));//0
+        log(Number.isNaN(Math.sign('aa')));//true
+
+
+        //Math.cbrt()
+        //用于计算一个数的立方根
+        //如果不是数值会先转换为数值
+        log(Math.cbrt('8'));//2
+        log(Number.isNaN(Math.cbrt('Number')));//true
+
+        //Math.hypot()
+        //返回所有参数的平方和的平方根
+        //如果不是数值会先转换为数值
+        //如果其中一个参数不是无法转换数值，返回NaN
+        log(Math.hypot(3,4));//5
+        log(Number.isNaN(Math.hypot(1,2,'aa')));//true
+
+
+
+    </script>
+</body>
+</html>
