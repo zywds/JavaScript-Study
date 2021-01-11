@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const {log} = console;
+        function a(){
+            //函数参数默认值，基本用法
+            //如判断y是否被赋值，如果没有，则指定默认值为world
+            function log1(x,y){
+                //y = y || 'world';
+                //如果没有被赋值，类型是undefined
+                if (typeof y ==='undefined'){
+                    y = 'world';
+                }
+                log(x,y);
+            }
+            log(typeof null); //object
+
+            log1('hello'); //hello word
+            //如果y赋值了，但是对应的布尔值为false,则该赋值不起作用，最后结果使用默认值
+            log1('hello','');//hello word
+
+
+            //为了避免这个问题，需要判断下
+            //if (typeof y === 'undefined') 
+
+        };
+        //a();
+        function b(){
+            function fun(x = 0,y = 0){
+                this.x = x;
+                this.y = y;
+            };
+            const f1 = new fun();
+            log(f1);
+
+        };
+        //b();
+
+        //参数变量是默认声明的，在函数体中，不能用let或const再次声明，否则会报错
+        function c(){
+            function fun1(x1){
+                //let x1 = 1;
+                //const x1 = 1;
+            };
+            fun1();
+        };
+        //c();
+
+        //参数默认值是不传值的，而是每次都重新计算默认值表达式的值
+        function d(){
+            let x = 99;
+            function func1(p = x + 1){
+                log(p);
+            };
+            func1();//100
+            x = 100;
+            func1();//101
+        };
+        //d();
+
+        //与解构赋值默认值结合使用
+        function e(){
+            function foo([x = 0,y = 0]){
+                log(x,y)
+            };
+            //foo([]);
+            foo([1]);
+            foo([1,2]);
+
+            function foo({x=0,y=0}){
+                log(x,y);
+            };
+            //foo({});//0 0
+            //foo({x:1});//1 0
+            //foo({x:1,y:1});//1 1
+        };
+        //e();
+
+        //第一种对象默认值写法
+        function f(){
+            function foo({x,y=5} = {}){
+                log(x,y);
+            };
+            foo();//undefined 5
+            foo({y:1});//undefined 1
+        };
+        //f();
+
+        //第二种对象默认值写法
+        function g(){
+            function foo({x,y} = {x:0,y:0}){
+                log(x,y);
+            };
+            foo();//0,0
+            foo({});//undefined undefined
+            foo({x:1,y:1});//1,1
+            foo({x:1})//1 undefined
+        };
+        //g();
+
+        //以下为函数默认值不允许写法
+        function h(){
+            function foo(x = 1,y){
+                return [x,y];
+            };
+            let [x,y] = foo(undefined,1);
+            log([x,y]);//[1.1]
+            //log(foo(,1));//报错
+        };
+        //h();
+
+        //函数的length属性
+        //返回参数定义的个数
+        //不包括默认值的参数,并且默认值后面的参数也不包括
+        function i(){
+            log((function(x,y){}).length);//2
+            log((function(a){}).length);//1
+            log((function(a,b=1){}).length);//1
+            log((function(a,b=1,c,d=1){}).length);//1
+
+        };
+        //i();
+
+        //作用域定义：
+        //一旦设置了参数的默认值，函数进行声明初始化时，参数就会形成一个单独的作用域，
+        //等到初始化结束，这个作用域就会消失，这种语法行为，在不设置参数默认值时，不会出现
+        //如果设置了默认值，而默认值本身没有定义，则指向全局参数
+        //内部的局部变量影响不到默认值变量
+        //无论内部变量如何都无法影响默认值
+
+        //作用域1
+        function j(){
+            var x = 1;
+            function foo(x,y=x){
+                log(y);
+            };
+            foo(2);//2
+        };
+        //j();
+        //作用域2
+        //函数定义参数部分与函数体是两个作用域
+        function k(){
+            let x = 1;
+            function foo(y = x){
+                let x = 2;
+                log(x);//2
+                log(y);//1
+            }
+            foo();//
+        };
+        //k();
+        //作用域3
+        //以下情景报错
+        function l(){
+            // function foo(y = x){
+            //     log(y);
+            // };
+            // foo();
+
+            let x = 1;
+            //这里不属于x重复定义，因为不在一个作用域
+            //Cannot access 'x' before initialization
+            //无法在初始化之前访问x
+            //x没初始化之前是访问不到x的
+            function foo2(x= x){
+                log(x);
+
+            };
+            foo2();
+        };
+        //l();
+
+        function j(){
+            let x = 1;
+            function foo(y = x){
+                x = 2;
+                //var x = 2;
+                log(x); //2
+                log(y); //1
+            };
+            foo();
+        };
+        //j();
+
+        //内部变量不会影响默认参数的值
+        function k(){
+            var x = 1;
+            //x参数有定义，这里形成一个单独的作用域，所以匿名函数中的x指向前面定义的参数x
+            function foo(x,y = () => {x = 2;log(x);}){
+                //不是同一个作用域
+                //var x = 3;
+                x = 1;
+                //当var去掉之后，函数foo内部的变量x就指向第一个参数x,与匿名函数内部的x
+                //是一致的，所以最后输出的是2，而外层的全局变量x依然不受影响
+                log(x);//3   1
+                y();//2      2
+                log(x);//3   2
+            }
+            foo();
+            log(x);//1       1
+        };
+        k();
+
+        //rest
+        //rest参数之后不能再有其它参数（即只能是最后一个参数），否则会报错
+        //函数的length属性，不包括rest参数
+        function l(){
+            function add(...values){
+                let sum = 0;
+                for(var val of values){
+                    sum += val;
+                }
+                return sum;
+            };
+            log(add(2,1,3,4));//10
+            function sort1(...numbers){
+                log(numbers.sort());
+            };
+            sort1(2,11,4,2);
+        };
+        //l();
+
+        function j(){
+            function push(array,...items){
+                items.forEach(item => {
+                    array.push(item);
+                    log(item);
+                });
+            };
+            let a = [];
+            push(a,1,2,3,4,5);
+            log(a);
+        };
+        //j();
+
+        //严格模式
+        //从es5开始，函数内部可以设定为严格模式
+        //es6做了一点修改，只要函数参数使用了默认值，解构赋值，或则拓展运算符，那么函数内部
+        //就不能显示设定为严格模式，否则会报错
+
+
+        //name属性
+        //匿名函数中 es5中是获取不到名称的
+        function k(){
+            let foo = () => {};
+            log(foo.name);//foo
+            function student(){
+
+            }
+            log(student.prototype.constructor.name);
+
+            //如果将一个具名函数赋值给一个变量，则es5,es6的name属性都返回这个具名函数原本的名字
+            const bar = function baz(){};
+            log(bar.name);//baz
+        };
+        //k();
+
+        //Function构造函数返回的函数实例,name属性值为anonymous
+        function ll(){
+            (new Function).name; //anonymous
+        }
+
+        //bind()
+        //创建一个新的函数，在bind()被调用时，这个新函数的this
+        //创建一个新的函数，需要重新调用才行
+        //obj.myFun.bind(db)();
+        function bindss(){
+            var name = '小王',age = 17;
+            var obj = {
+                name:"小张",
+                objAge:this.age,
+                myFun:function(fm,t){
+                    console.log(`${this.name} 年龄${this.age},来自${fm}去往${t}`);
+                }
+            }
+            var db = {
+                name:'德玛',
+                age:99
+            }
+            //三者参数不限定是string类型，允许是各种类型，包括函数，object等等
+            obj.myFun.call(db,'成都','上海');　　　 // 德玛 年龄 99  来自 成都去往上海
+            obj.myFun.apply(db,['成都','上海']);      // 德玛 年龄 99  来自 成都去往上海  
+            obj.myFun.bind(db,'成都','上海')();       // 德玛 年龄 99  来自 成都去往上海
+            obj.myFun.bind(db,['成都','上海'])();　　 // 德玛 年龄 99  来自 成都, 上海去往 undefined
+
+        };
+
+
+
+        //被指定为bind()的第一个参数，而其余参数将作为新函数的参数，
+        //供调用时使用
+        //bind返回的返回，name属性值会加上bound前缀
+        function l(){
+            function foo(){};
+            foo.bind({}).name //bound foo
+
+        };
+        //l();
+        //bind()
+        //向 <p> 元素添加一个单击事件：
+        // $("p").bind("click",function(){
+        //     alert("这个段落被点击了。");
+        // });
+        //on()
+        // $("tbody").on("click",".del",{},function(){
+
+        // });
+        
+        //map简单用法
+        function m(){
+            log([1,2,3].map(item => item));//[1,2,3]
+            const headAdnTail = (head,...tail) => [head,tail];
+            log(headAdnTail(1,2,3,4,5));//[1, Array(4)]
+        };
+        //m();
+
+        //箭头函数使用的几个注意点
+        //1、函数体内的this对象，就是定义是所在的对象，而不是使用时所在的对象
+        function n(){
+            function foo(){
+                setTimeout(() => {
+                    log(`id:${this.id}`);
+                },1000);
+            };
+            var id =21;
+            foo();//id:undefined
+            foo.call({id:1});//id:1
+            foo.apply({id:2});//id:2
+            foo.bind({id:3})();//id:3
+        };
+        //n();
+
+
+        //2、不可以当作构造函数，也就是说，不可以使用new命令，否则会抛一个错误
+        //3、不可以使用arguments对象，该对象在函数体内不存在，如果要用，可以用rest参数代替
+        //4、不可以使用yield命令，因此箭头函数不能用作Generator函数
+
+
+
+
+
+        //Function.prototype.toString()
+        //toString()方法返回函数代码本身，以前会省略注释和空格，现在会返回一模一样的代码
+
+        //catch命令的参数省略
+        //以前要求catch命令后面必须跟参数，接收try代码块抛出的错误对象
+        // try{
+
+        // }catch(err){
+
+        // }
+
+        //现在es6允许省略参数
+        // try{
+            
+        // }catch{
+
+        // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>

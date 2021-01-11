@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const {log} = console;
+        //内部变量不会影响默认参数的值
+        function k(){
+            var x = 1;
+            //x参数有定义，这里形成一个单独的作用域，所以匿名函数中的x指向前面定义的参数x
+            function foo(x,y = () => {x = 2;log(x);}){
+                //参数
+                //不是同一个作用域
+                log(x);//undefined
+                var x = 3;
+                //x = 3;
+                //当var去掉之后，函数foo内部的变量x就指向第一个参数x,与匿名函数内部的x
+                //是一致的，所以最后输出的是2，而外层的全局变量x依然不受影响
+                //log(x);//3   1
+                y();//2      2
+                log(x);//3   2
+            }
+            foo();
+            log(x);//1       1
+        };
+        k();
+
+
+    </script>
+</body>
+</html>
