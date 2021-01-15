@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const {log} = console;
+        log(console);
+        log(Math);
+        log(typeof console);
+        log(typeof Math);
+
+        //let arr1 = {a:1,b:2,c:3}
+        //const map = new Map();
+        //map.set("one",1);
+        //map.set("two",2);
+        //log(map);
+        let arr1 = 'foo';
+        //let arr1 = [1,2,3];
+        //let arr1 = {'one':1,"two":2}; //错误
+        for (let value of arr1){
+            log(value);
+        };
+
+        let arr2 = [{"one":1,"two":2},{"one":3,"two":4}];
+        arr2.map(item => {
+            log(item);
+        });
+
+    </script>
+</body>
+</html>

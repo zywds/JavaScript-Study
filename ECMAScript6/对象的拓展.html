@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const {log} = console;
+        //属性的简介写法
+        function a(){
+            const foo = 'bar';
+            const a = {foo};
+            log(a);//{foo: "bar"}
+
+            function foo1(a,b){
+                return {a,b};
+            };
+            log(foo1(1,2));//{a: 1, b: 2}
+
+        };
+        //a();
+
+        //这个例子有属性的简写也有方法的简写
+        function b(){
+            let birth = '2020-10-11'
+            let app = {
+                id:1,
+                birth,
+                method(){
+                    //log(this.id,this.birth);
+                    let ids = this.id;
+                    let births = this.birth;
+                    log(births);
+                    return {ids,births};
+                }
+            };
+            log(app.method());
+        };
+        //b();
+
+        //CommonJS模块输出一组变量，
+        function c(){
+            // let ms = {},
+            // function getItem(key) {
+            //     return key in ms ? ms[key]:null;
+            // }
+            // function setItem(key,value) {
+            //     ms[key] = value;
+            // }
+            // function clear() {
+            //     ms = {};
+            // }
+
+            //module.exports = {getItem,setItem,clear};       
+        }
+        
+        //简洁语法在打印对象是也很有用
+        function d() {
+            let user = {
+                name:'test'
+            }
+            let foo = {
+                bar:'baz'
+            }
+            log(user,foo);//{name: "test"} {bar: "baz"}
+            log({user,foo});//{user: {…}, foo: {…}}
+        };
+        //d();
+
+        //es6允许字面量定义对象是，将表达式作为对象的属性名
+        function e() {
+            let propkey = 'foo';
+            let obj = {
+                [propkey]:true,
+                ['a' + 'bc']:123
+            };
+
+            let lastWorld = 'last world';
+            const a = {
+                'first word':'hello',
+                [lastWorld]:'world'
+            };
+            log(a['first word']);//hello
+            log(a[lastWorld]);//world
+            log(a['last world']);//world
+
+
+        };
+        //e();
+
+
+        //方法的name属性
+        //函数的name属性，返回函数名，对象方法也是函数，因此也有name属性
+        function f() {
+            const person = {
+                sayName(){
+                    console.log('hello');
+                }
+            }
+            log(person.sayName.name);//sayName
+
+        };
+        //f();
+
+        //如果对象的方法使用了取值函数（getter）和存值函数(setter),则name属性不是在该方法上面
+        //而是该方法的属性的描述对象的get和set属性上面，返回值是方法名加上get和set
+        function g() {
+            const obj ={
+                get foo(){},
+                set foo(x){}
+            };
+            const descriptor = Object.getOwnPropertyDescriptor(obj,'foo');
+            log(descriptor.get.name);//get foo
+            log(descriptor.set.name);//set foo
+
+            //有两个特殊的情况，bind方法创造的函数，name属性返回bound加上原函数的名字
+            //Function构造函数创造的函数，name属性返回anonymous
+            log((new Function()).name);//anonyous
+            var doSomething = function () {
+                
+            };
+            log(doSomething.bind().name);//bound doSomething
+        };
+        //g();
+
+        //尽量不要用for...in循环，而用object.keys()代替
+
+        //super关键字
+        //this关键字总是指向函数所在的当前对象，es6又新增了另一个类似的关键字，super,指向当前对象的原型对象
+        function h() {
+            const proto = {
+                foo:'hello'
+            };
+            const obj = {
+                foo:'world',
+                foo(){
+                    return super.foo;
+                }
+                
+            };
+            Object.setPrototypeOf(obj,proto);
+            log(obj.foo());//hello
+
+            //super关键字表示原型对象时，只能用在对象的方法之中，用在其他地方都会报错
+            //用在了属性中
+            // const obj1 = {
+            //     foo:super.foo
+            // }
+
+            // const obj = {
+            //     foo:() => super.foo
+            // }
+
+            // const obj = {
+            //     foo:function(){
+            //         return super.foo
+            //     }
+            // }
+        };
+        //h();
+
+        function i(){
+            const proto = {
+                x:'hello',
+                foo(){
+                    log(this.x);
+                }
+            }
+            const obj = {
+                x:"world",
+                foo(){
+                    super.foo();
+                },
+                add:function(a,b){
+                    //log(a + b);
+                }
+            }
+            Object.setPrototypeOf(obj,proto);
+            obj.foo();//world
+            obj.add(1,2);
+        };
+        //i();
+
+        //对象的扩展运算符...
+        //解构赋值要求等号右边时一个对象，如果等号右边时undefined或null，就会报错，因为无法转为对象
+        //解构赋值必须是最后一个参数，否则会报错
+        function j(){
+            let {x,y,...z} = {x:1,y:2,z:2,i:4};
+            log(x);//1
+            log(y);//2
+            log(z);//{z: 2, i: 4}
+
+            //解构赋值拷贝的是值的引用，不是副本，是浅拷贝
+            let obj = {a:{b:1}};
+            let {...j} = obj;
+            obj.a.b = 2;
+            log(j.a.b);//2
+
+            //拓展运算符的解构赋值，不能赋值继承自原型对象的属性
+            let o1 = {a:1};
+            let o2 = {b:2};
+            Object.setPrototypeOf(o2,o1);
+            //o2.__proto__ = o1;
+            let {...o3} = o2;
+            log(o3.a);//undefined
+            log(o3.b);//2
+
+        };
+        //j();
+
+        //单纯的解构赋值，可以读取对象o继承的属性，而拓展运算符的解构赋值，只能读取本身的值
+        function k(){
+            const o = Object.create({x:1,y:2});
+            o.z = 3;
+            log(o);//{z: 3}
+            log(o.__proto__);//{x: 1, y: 2}
+            let {x,...newObj} = o;
+            
+            log(x);//1
+            log(newObj);//{z: 3}
+            let { y, z } = newObj;
+            log(y);//undefined
+            log(z);//3
+        };
+        //k();
+
+        //由于数组是特殊的对象，所以对象的拓展运算符也可以用于数组
+        function l(){
+            let foo = {...['a','b','c']};
+            log(foo);//{0: "a", 1: "b", 2: "c"}
+            //如果扩展运算符后面是一个空对象，没有任何效果
+            //{...{},a:1} //{a:1}
+            //如果扩展运算符后面不是对象，会自动转为对象
+            //下面的例子，由于对象没有自身属性，所以返回一个空对象
+            //Object(1),Object(true),Object(undefined),Object(null)
+            log({...1});//{}
+            log({...undefined});//{}
+            log({...null});//{}
+            log({...true});//{}
+
+            //如果扩展运算符后面的是字符串，会自动转成一个类似数组的对象，因此返回的不是空对象
+            log({...'hello'});//{0: "h", 1: "e", 2: "l", 3: "l", 4: "o"}
+
+
+
+        };
+        //l();
+
+        //合并对象
+        function n(){
+            let a = {name:"zywds"};
+            let b = {age:19};
+            let ab = {...a,...b};
+            let ab1 = Object.assign({},a,b);
+            log(ab);//{name: "zywds", age: 19}
+            log(ab1);//{name: "zywds", age: 19}
+        };
+        //n();
+
+        //克隆对象,包括原型
+        function m(){
+            const clone2 = Object.assign(
+                Object.create(Object.getPrototypeOf(obj)),obj
+            );
+            const clone3 = Object.create(
+                Object.getPrototypeOf(ojb),
+                Object.getOwnPropertyDescriptor(obj)
+            );
+        };
+        //m();
+
+        //链式判断运算符 ?
+        //相当于以一种段落机制，只要不满足条件，就不会再往下指向
+        function n(){
+            log(a?.b);//undefined
+            //等同于
+            //a == null ? undefined : a.b
+            log(a?.b());//a == null ? undefined : a.b()
+            log(a?.());//a == null ? undefined : a();
+            //括号的影响
+            //如果属性链有圆括号，链判断运算符对圆括号外部没有影响，支队内部有影响
+            //使用?.运算符的场合，不应该使用圆括号
+
+            //下面写法禁止
+            //new a?.()
+            //a?.`{b}`
+            //super?.();
+            //super?.foo
+            //a?.b=c
+        };
+        //n();
+
+        //Null运算符 ??
+        //??有一个运算优先级问题，它与$$和||的优先级孰高孰低，现在规则是，如果多个运算符一起
+        //使用。必须用括号表名优先级，否则会报错
+        function o(){
+            //如果某个属性的值是null或undefined，有时候需要为它们指定默认值
+            let b = undefined;
+            let a = b || 2;
+            log(a);//2
+            let c = b ?? 2;
+            log(c);//2
+
+            //??
+            //a $$ b ?? c //报错
+            //(a && b) ?? c
+            //(a || b) ?? c
+            //a ?? (b || c)
+        };
+        o();
+
+
+
+    </script>
+</body>
+</html>

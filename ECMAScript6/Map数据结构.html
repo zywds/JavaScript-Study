@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const {log} = console;
+
+        //Object结构提供了‘字符串-值’的对应，Map结构提供了‘值-值’的对应，是一种更完善的Hash
+        //结构实现，如果你需要‘键值对’的数据结构，Map比Object更合适
+        function a(){
+            const m = new Map();
+            const o = {p:'hello world'};
+            m.set(o,'content');
+            log(m.get(o));//content
+
+            log(m.has(o));//true
+            m.delete(o);
+            log(m.has(o));//false
+        };
+        //a();
+        //Map也可以接受一个数组作为参数，该数组的成员是一个个表示键值对的数组
+        function b(){
+            const map = new Map([
+                ['name','张三'],
+                ['title','Author']
+            ]);
+            log(map.size);
+            map.has('name');//true
+            map.get('name');//张三
+            map.has('title');//true
+            map.get('title');//Author
+
+
+            const items = [
+                ['name','张三'],
+                ['title','Author']
+            ];
+            const map1 = new Map();
+            items.forEach(([key,value]) => map1.set(key,value));
+            log(map1);  //Map(2) {"name" => "张三", "title" => "Author"}
+                        //[[Entries]]
+                        //0: {"name" => "张三"}
+                        //key: "name"
+                        //value: "张三"
+                        //1: {"title" => "Author"}
+                        //key: "title"
+                        //value: "Author"
+            
+            
+            //事实上，不仅仅是数组，任何具有Iterator接口，且每个成员都是一个双元素的数组的数据结构
+            //都可以当作Map构造函数的参数，也就是说，Set和Map都可以用来生成新的Map
+            const set = new Set([
+                ['foo',1],
+                ['bar',2]
+            ]);
+            const m1 = new Map(set);
+            log(m1.get('foo'));//1
+
+            const m2 = new Map([['baz',3]]);
+            const m3 = new Map(m2);
+            log(m3.get('baz'));//3
+
+        };
+        //b();
+
+        function c(){
+            //如果对同一个键多次赋值，后面的值会覆盖前面的值
+            const map = new Map();
+            map.set(1,'a');
+            map.set(1,'b');
+            log(map.get(1));//b
+
+            //读取一个未知的键，则返回undefined
+            log(map.get(2));//undefined
+
+            //只有对同一个对象的引用，Map结构才将其视为同一个键，
+            //下面代码的set和get方法，表面是针对同一个键，但实际上这个两个不同的数组实例，
+            //内存地址是不一样的，因此get方法无法读取该键，返回undefined
+
+            const map1 = new Set();
+            map.set(['a'],1);
+            log(map.get(['a']));//undefined
+
+            //Map的键实际上是跟内存地址绑定的，只要内存地址不一样，就视为两个键，
+
+        };
+        //c();
+
+        function d(){
+            //如果Map的键是一个简单类型的值(数字、字符串、布尔值)，只要两个值严格相等
+            //Map将其视为一个键，比如0和-0就是一个键，布尔值true和字符串true则是两个不同的键
+            //另外，undefined和null也是两个不同的键，虽然NaN不严格相等于自身，但Map将其视为
+            //同一个键
+            let map = new Map();
+            map.set(0,1);
+            map.set(-0,2);
+            log(map.get(0));//2
+
+            map.set(true,'a');
+            map.set('true','b');
+            log(map.get('true'));//b
+
+            map.set(undefined,'c');
+            map.set(null,'d');
+
+            map.set(NaN,123);
+            log(map.get(NaN));//123
+        };
+        //d();
+
+        //Map结构的实例有以下属性和操作方法
+        function e(){
+            //size
+            //Map.prototype.set
+            //Map.prototype.get
+            //Map.prototype.has
+            //Map.prototype.delete
+            //Map.prototype.clear
+            //map.clear();
+        };
+        //e();
+
+
+        //遍历方法
+        function f(){
+            //Map.prototype.keys()
+            //Map.prototype.values()
+            //Map.prototype.entries()
+            //Map.prototype.forEach()
+            const map = new Map([
+                ['one',1],
+                ['two',2]
+            ]);
+            for (let key of map.keys()){
+                log(key);
+            };
+            for (let value of map.values()){
+                log(value);
+            };
+            for (let [key,value] of map.entries()){
+                log(key,value);
+            };
+            //等同于使用map.entries()
+            for (let [key,value] of map){
+                log(key,value);
+            };
+
+
+        };
+        //f();
+
+        //Map结构转为数组结构，比较快速的方法是使用拓展运算符(...)
+        function g(){
+            const map = new Map([
+                ['one',1],
+                ['two',2],
+                ['three',3]
+            ]);
+            log([...map.keys()]);
+            log([...map.values()]);
+            log([...map.entries()]);
+            log([...map]);
+        };
+        //g();
+
+        function h(){
+            const map = new Map();
+            map.set(1,'a');
+            map.set(2,'b');
+            map.set(3,'c');
+            const map1 = new Map([...map].filter(([k,v]) => k < 3));
+            log([...map1]);//[Array(2), Array(2)]
+
+            //Map还有一个forEach方法，与数组的forEach方法类似，也可以实现遍历
+            
+            map.forEach((value,key,map) => {
+                log(key);//1,2,3
+            });
+            //还可以接受第二个参数，用来绑定this
+            const reporter = {
+                report:function(key,value){
+                    log(`key:${key}:value:${value}`);
+                }
+            };
+            //使用this时不要使用箭头函数
+            map.forEach(function(value,key,map){
+                this.report(key,value);//key:1:value:a
+            },reporter);
+
+
+        };
+        //h();
+        
+        //与其他数据结构的互相转换
+        function i(){
+            //Map转为数组
+            const map = new Map().set(1,'a').set(2,'b').set(3,'c');
+            log([...map]);//[Array(2), Array(2), Array(2)]
+
+            //数组转为Map
+            const map1 = new Map([
+                [true,7],
+                [{foo:3},['abc']]
+            ]);
+
+            //Map转对象
+            //如果Map的键都是字符串，可以无损的转为对象
+            function strMapToObject(strMap){
+                let obj = Object.create(null);
+                for (let [key,value] of strMap){
+                    obj[key] = value;
+                };
+                return obj;
+            };
+
+            const map2 = new Map().set('yes',true).set('no',false);
+            log(strMapToObject(map2));//{yes: true, no: false}
+
+            //对象转为Map
+            let obj1 = {'a':1,"b":2};
+            let map3 = new Map(Object.entries(obj1));
+            log(map3);
+
+            //自己写一个转换
+            function objToStrMap(obj){
+                let strMap = new Map();
+                for (let key of Object.entries(obj)){
+                    strMap.set(key,obj[key]);
+                };
+                return strMap;
+            };
+
+
+        };
+        //i();
+
+        function j(){
+            //Map转json
+            //先转成对象
+            let map = new Map().set('yes',1).set('no',2);
+            //{'yes':1,'no':2}
+            log(JSON.stringify({'yes':1,'no':2}));
+            
+
+        };
+        j();
+
+
+
+
+    </script>
+</body>
+</html>

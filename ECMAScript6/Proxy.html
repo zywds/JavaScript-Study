@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const {log} = console;
+        //Proxy
+        //Proxy接受两个参数。第一个参数是所要代理的目标对象（上例是一个空对象），
+        //即如果没有Proxy的介入，操作原来要访问的就是这个对象；第二个参数是一个配置对象，
+        //对于每一个被代理的操作，需要提供一个对应的处理函数，该函数将拦截对应的操作。
+
+        //拦截方法
+        //get(target,propkey,receiver)：
+        //拦截器对象属性的读取，比如proxy.foo 和 proxy['foo']
+        function a(){
+            //get方法可用于拦截某个属性的读取操作，可以接受三个参数，依次为目标对象、属性名和
+            //proxy实例本身(严格地说，是操作行为所针对的对象)，其中最后一个参数可选‘
+            var person = {
+                name:'张三'
+            };
+            var proxy = new Proxy(person,{
+                get:function(target,propkey){
+                    if (propkey in target){
+                        return target[propkey];
+                    } else{
+                        throw new ReferenceError(`Prop name \\${propke}\\does not exist`);
+                    }
+                }
+            });
+            //如果没有这个拦截器，访问不存在的属性，只会返回undefined
+            log(proxy.name);//张三
+
+            //get方法可以继承
+            var proxy2 = new Proxy({},{
+                get:function(target,propkey){
+                    return `GET ${propkey}`;
+                }
+            });
+            let obj = Object.create(proxy2);
+            log(obj.name);//GET name
+
+
+
+        };
+        a();
+
+
+
+    </script>
+</body>
+</html>
