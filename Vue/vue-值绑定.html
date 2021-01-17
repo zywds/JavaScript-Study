@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- <label :for="index" v-for="(item,index) in originChks">
+            <input type="checkbox" :id="index" :value="item" v-model="chks">{{item}}
+        </label> -->
+        <!-- 不写for也可以 -->
+        <label v-for="(item,index) in originChks">
+            <input type="checkbox" :value="item" v-model="chks">{{item}}
+        </label>
+        <h2>{{chks}}</h2>
+    </div>
+    
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el:'#app',
+            data:{
+                chks:[],
+                originChks:['香蕉','西瓜','梨']
+            }
+        });
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        table{
+            border: 1px solid red;
+            width: 100%;
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+        th,td{
+            border: 1px solid red;
+            text-align: center;
+            vertical-align: bottom;
+
+        }
+        th{
+            font-weight: bold;
+
+        }
+        [v-cloak]{
+            display: none;
+        }
+        /* tr:last-child td{
+            text-align: right;
+            padding-right: 30px;
+        } */
+
+
+    </style>
+</head>
+<body>
+    <div id="app" v-cloak>
+        <div v-if="movies.length">
+            <table>
+                <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>名称</th>
+                        <th>类型</th>
+                        <th>简介</th>
+                        <th>价格</th>
+                        <th>数量</th>
+                        <th>操作</th>
+                    </tr>   
+                </thead>
+                <tbody>
+                    <tr v-for="(item,index) in movies">
+                        <td>{{item.id}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.type}}</td>
+                        <td>{{item.desc}}</td>
+                        <td>{{item.price | currentPrice(item.price)}}</td>
+                        <td>
+                            <button @click="decrease(index)" :disabled="item.number <= 1">-</button>
+                            {{item.number}}
+                            <button @click="increase(index)">+</button>
+                        </td>
+                        <td>
+                            <button @click="remove(index)">移除</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2>总价格：{{total | currentPrice(total)}}</h2>
+        </div>
+        <h1 v-else>无数据！</h1>
+
+        <button @click="test">测试</button>
+
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const {log} = console;
+        var app = new Vue({
+            el:"#app",
+            data:{
+                title:"zywds",
+                movies:[
+                    {id:1,name:'猪猪侠',type:'动画片',desc:'猪猪保卫战',price:5.00,number:2},
+                    {id:2,name:'秦时明月',type:'国漫',desc:'中国古代文化',price:23.18,number:6},
+                    {id:3,name:'这个世界不看脸',type:'都市',desc:'商业爱情相关',price:11.56,number:1}
+                ]
+            },
+            //过滤器
+            filters:{
+                currentPrice(price){
+                    return `￥ ${price.toFixed(2)}`;
+                }
+            },
+            computed:{
+                total(){
+                    let totals = 0;
+                    this.movies.forEach(element => {
+                        totals += element.price * element.number;
+                    });
+                    return totals;
+                }
+            },
+            watch:{},
+            methods:{
+                increase(index){
+                    this.movies[index].number++;
+                },
+                decrease(index){
+                    this.movies[index].number--;
+                },
+                remove(index){
+                    this.movies.splice(index,1);
+                },
+                test(){
+                    for (let i in this.movies){
+                        console.log(i);
+                    }
+                    for (let {id,name,type,desc,price,number} of this.movies){
+                        console.log(id,name,type,desc,price,number);
+                    }
+
+                    //累加器
+                    //前面一个是值，后面一个如果在对象中用的话，需要依靠其获取对象中对应的属性
+                    log(this.movies.reduce((prevalue,value) => prevalue + value.price*value.number,0));
+
+
+                    let arr1 = [1,2,3,4,5];
+                    //reduce还可以给一个初始化值
+                    //第一次：m=0,n=1
+                    //第二次：m=1,n=2
+                    //第三次: m=3,n=3
+                    log(arr1.filter(n => n<4).map(n => n*2).reduce((m,n) => m+n,0));
+                    
+                }
+            },
+            beforeCreate(){},
+            created(){},
+            beforeMount(){},
+            mounted(){},
+            beforeUpdate(){},
+            updated(){},
+            beforeDestroy(){},
+            destroyed(){},
+            activated(){}
+        });
+        //编程范式   声明式编程vue,react    命令式编程，第一步，第二步，第三步
+        //编程范式   面向对象编程(第一公民：对象)   面向函数编程(第一公民：函数,可以实现链式编程)
+
+    </script>
+</body>
+</html>

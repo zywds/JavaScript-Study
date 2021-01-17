@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 组件实例 -->
+        <cpn1></cpn1>
+        <cpn1></cpn1>
+        <cpn1></cpn1>
+    </div>
+    <template id="template1">
+        <!-- 这个div一定要有 -->
+        <div>
+            <span>{{count}}</span>
+            <button @click="increase">+</button>
+            <button @click="decrease">-</button>
+        </div>
+        
+    </template>
+    <script src="../js/vue.js"></script>
+    <script>
+
+        // 如果想要相互影响，可以在外面定义obj
+        const app = new Vue({
+            el:'#app',
+            data:{
+
+            },
+            components:{
+                'cpn1':{
+                    template:'#template1',
+                    data(){
+                        //  每次调用都会返回一个新对象
+                        return {
+                            count:0
+                        }
+                    },
+                    methods:{
+                        increase(){
+                        this.count++;
+                        },
+                        decrease(){
+                            this.count--;
+                        }
+                        
+                    }
+                }
+            }
+        });
+
+        // function abc(){
+        //     return {
+        //         name:'zywds'
+        //     }
+        // };
+        // 不是同一个对象
+        // var obj1 = abc();
+        // var obj2 = abc();
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <cpn1></cpn1>
+    </div>
+
+    <!-- 1、script标签，主要，类型必须是text/x-template -->
+    <!-- <script type="text/x-template" id="template1">
+        <span>aaa</span>
+    </script> -->
+
+    <template id="template1">
+        <!-- 组件内部不能访问Vue实例数据 -->
+        <span>{{msg}}</span>
+
+    </template>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        //注册全局组件
+        // Vue.component('cpn1',{
+        //     template:"#template1"
+        // });
+
+        const app = new Vue({
+            el:'#app',
+            data:{
+
+            },
+            components:{
+                'cpn1':{
+                    template:"#template1",
+                    data(){
+                        //返回一个对象
+                        return {
+                            msg:'aaa1'
+                        }
+                    }
+                }
+            }
+        });
+
+
+    </script>
+</body>
+</html>

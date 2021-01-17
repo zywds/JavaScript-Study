@@ -46,7 +46,67 @@
 
 
         };
-        a();
+        //a();
+
+        function b(){
+            //下面的例子，使用get拦截，实现数组读取负数的索引
+            function createArray(...elements){
+                const handler = {
+                    get:function(target,propkey,receiver){
+                        let index = Number(propkey);
+                        if (index < 0){
+                            propkey = String(target.length + index);
+                        }
+                        return Reflect.get(target,propkey,receiver);
+
+                    }
+                };
+
+                let target = [];
+                target.push(...elements);
+                return new Proxy(target,handler);
+            };
+            let arr = createArray('a','b','c');
+            log(arr[-1]);//c
+            log(arr[1]);//b
+
+            //let arr1 = [];
+            //arr1.push(1,2,3);
+            //log(arr1);//[1, 2, 3]
+
+
+        };
+        //b();
+
+
+        function c(){
+            //普通对象for...of
+            let obj = {
+                'name':'zywds',
+                'age':21
+            };
+            for (let key of Object.keys(obj)){
+                log(key);
+            };
+            for (let value of Object.values(obj)){
+                log(value);
+            };
+            for (let [key,value] of Object.entries(obj)){
+                log(`key:${key},value:${value}`);
+            };
+            
+
+
+        };
+        //c();
+        //只要具有iterator接口，都可以使用for...of遍历
+
+        //for...in循环有几个缺点
+        //1、数组的键名是数字，但是for...in循环是以字符串作为键名0,1,2等等，
+        //某些情况下，for...in循环会以任意循环遍历键名，总之，for...in循环主要是为
+        //遍历对象而设计的，不适用于遍历数组
+
+        //foreach，无法中途跳出foreach循环，break命令或return命令都不能奏效
 
 
 

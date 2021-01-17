@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <cpn1></cpn1>
+
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        //可以直接注册组件(全局)
+        // Vue.component('cpn1',{
+        //     template:`
+        //         <span>aaa</span>
+        //     `
+        // });
+
+        const app = new Vue({
+            el:'#app',
+            data:{
+
+            },
+            //语法糖写法
+            components:{
+                'cpn1':{
+                    template:`
+                        <span>aaa</span>
+                    `
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>

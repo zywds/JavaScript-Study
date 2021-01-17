@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- select 单选框  用户只能选择一个 -->
+        <label for="select1">
+            <select id="select1" v-model="selectOnly">
+                <option value="a">a</option>
+                <option value="b">b</option>
+                <option value="c">c</option>
+                <option value="d">d</option>
+            </select>
+        </label>
+        <h2>{{selectOnly}}</h2>
+
+        <!-- select 多选框  用户可以选择多个 -->
+        <label for="select2">
+            <select id="select2" multiple v-model="selectAll">
+                <option value="a">a</option>
+                <option value="b">b</option>
+                <option value="c">c</option>
+                <option value="d">d</option>
+            </select>
+        </label>
+        <h2>{{selectAll}}</h2>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el:'#app',
+            data:{
+                selectOnly:'b',
+                selectAll:['b']
+            }
+        });
+
+    </script>
+</body>
+</html>
