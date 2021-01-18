@@ -7,8 +7,377 @@
 </head>
 <body>
     <script>
+        const {log} = console;
+        //基本概念
+        //1、Generator函数是ES6提供的一种异步编程解决方案，语法行为与传统函数完全不同，
+        //2、语法上，Generator函数是一个状态机，封装了多个内部状态
+        //3、执行Generator函数会返回一个遍历器对象，也就是说，Generator函数除了状态机，还是一个遍历器对象生成函数，返回的遍历器对象，可以依次遍历Generator函数内部每一个状态
+        //4、新式上，Gererator函数是一个普通函数，但是有两个特征，一是：function关键字与函数名之间有一个星号，而是，函数体内部使用yield表达式，定义不同的内部状态(yield在英语里的意思是产出)
+        function a(){
+            function* hellowordGenerator(){
+                yield 'hello';
+                yield 'word';
+                return 'ending'
+            }
+            var hw = hellowordGenerator();
+            log(hw.next());//{value: "hello", done: false}
+            log(hw.next());//{value: "word", done: false}
+            log(hw.next());//{value: "ending", done: true}
+            log(hw.next());//{value: undefined, done: true}
+        };
+        //a();
+
+        function b(){
+            //yeild表达式  英文中有产出之意
+            //由于Generator函数返回的遍历器对象，只有调用next方法才会遍历下一个内部状态，所以其实提供了一种可以暂停执行的函数，yield表达式就是暂停标志
+            //需要注意的是，yield表达式后面的表达式，只有当调用next方法，内部指针指向该语句是才会执行，因此等于为javaScript提供了手动‘惰性求值’的语法功能
+            //Generator可以生成一系列的值，这也就是其名称的来历（英语中，Generator是生成器的意思）
+            //Generator可以不使用yield表达式，也就变成了单纯的暂缓执行函数
+            function* generator1(){
+                return 'aaa';
+            }
+            let a1 = generator1();
+            setTimeout(() => {log(a1.next())},2000);//{value: "aaa", done: true}
+
+        };
+        //b();
+
+        //yield表达式只能用在Generator函数中，用在其他地方都会报错
+        //yield如果用在另一个表达式中，必须放在圆括号里面 log('zywds' + (yield 123));
+        function c(){
+            function* c1(){
+                log('aaa');
+                yield 'zywds' + 123;
+            }
+            let c1s = c1();
+            log(c1s.next());
+
+        };
+        //c();
+
+        function d(){
+            //与Iterator接口的关系
+            //1、任意一个对象的Symbol.iterator方法，等于该对象的遍历器生成函数（Generator函数），调用该函数会返回该对象的一个遍历器对象
+            //由于Generator函数就是遍历器生成函数，因此可以把Fenerator赋值给对象的Symbol.iterator属性，从而使得该对象具有Ierator接口
+
+            //下面代码中，Generator函数赋值给Symbol.iterator属性，从而使得myIterable对象具有了Ierator接口，可以被...运算符便利了，
+            var myIteratorable = {};
+            myIteratorable[Symbol.iterator] = function* (){
+                yield 1;
+                yield 2;
+                yield 3;
+
+            }
+            let arr1 = [...myIteratorable];
+            log(arr1);//[1,2,3]
+
+            function* gen(){
+
+            }
+            var g = gen();
+            g[Symbol.iterator] === g;//true
+            //gen是一个Generator函数，调用它会生成一个遍历器对象g，它的Symbol.iterator属性，也就是一个遍历器对象生成函数，执行后返回它自己
 
 
+
+        };
+        //d();
+
+
+        //next方法的参数，该参数会被当作上一个yield表达式的返回值
+        function e(){
+            function* f(){
+                //无限循环写法
+                for(var i = 0; true; i++) {
+                    var reset = yield i;
+                    //每次调用都是从这里开始执行，除了第一次
+                    log(reset);//如果没有提供参数，就是undefined
+                    if (reset){
+                        i = -1;
+                    }
+                }
+            }
+            var g = f();
+            log(g.next());//0
+            log(g.next());//1
+            log(g.next(true));//0
+            
+        };
+        //e();
+
+        function f(){
+            function* fun(){
+                log('start');
+                yield '1';
+                yield '2';
+                return '3';
+            }
+            let fun1 = fun();
+            log(fun1.next());//start {value: "1", done: false}
+            //log(fun1.next());
+            //log(fun1.next());
+        };
+        //f();
+
+        function g(){
+            function* fun(){
+                log('start');
+                log(yield);
+                log(yield);
+                return 'end';
+            }
+            let fun1 = fun();
+            log(fun1.next());//start {value: undefined, done: false}
+        };
+        //g();
+
+        //由于next方法的参数表示上一个yield表达式的返回值，所以在第一次使用next方法时，传递参数是无效的
+        function h(){
+            function* fun(){
+                console.log('Started');
+                console.log(`1. ${yield}`); //let x = yield,这里next只能到yield在赋值，并不能输出，下一次调用才会输出
+                console.log(`2. ${yield}`); 
+                return 'result';
+            }
+            let fun1 = fun();
+            log(fun1.next());
+            log(fun1.next('a'));
+            log(fun1.next('b'));
+        };
+        //h();
+
+
+
+        function i(){
+            //for...of循环
+            //for...of可以自动遍历Generator函数运行时生成的Iterator对象，且此时不再需要调用next方法
+            function* foo(){
+                yield 1;
+                yield 2;
+                yield 3;
+                yield 4;
+                return 5;
+            }
+            for (let value of foo()){
+                log(value);//1,2,3,4  return返回的值不会被of遍历输出
+            }
+        };
+        //i();
+
+        function j(){
+            //斐波那契数列
+            //0,1,1,2,3,5,8,13
+            //generator实现
+            function* fSequence(){
+                let [prev,curr] = [0,1];
+                yield 0;
+                for (;;){
+                    yield curr;
+                    [prev,curr] = [curr,prev + curr];
+                }
+
+            }
+
+            for (let i of fSequence()){
+                if (i > 100){
+                    break
+                }
+                log(i);
+            }
+
+            
+        };
+        //j();
+
+        function k(){
+            // let obj = {name:'zywds',age:12};
+            // for (let i of obj){
+            //     log(i);//object is not iterable
+            // }
+            //let obj = {name:'zuwds',age:12};
+            //log(Reflect.ownKeys(obj));//["name", "age"]
+
+
+            //为原生JavaScript对象增加Generator函数，为其加上iterator接口
+            function* objectEntries(obj){
+                let propKeys = Reflect.ownKeys(obj);
+                for (let propKey of propKeys){
+                    yield [propKey,obj[propKey]];
+                }
+            }
+            let obj = {name:'zuwds',age:12};
+            for (let [key,value] of objectEntries(obj)){
+                log(key,value);//name zuwds    //age 12
+            }
+
+        };
+        //k();
+
+        function l(){
+            //第二种方式加上遍历器接口
+            function* objectEntries(){
+                let propKeys = Object.keys(this);
+                for (let propKey of propKeys){
+                    yield [propKey,this[propKey]];
+                }
+            };
+            let obj = {name:'zywds',age:15};
+            obj[Symbol.iterator] = objectEntries;
+            for (let [key,value] of obj){
+                log(key,value);
+            }
+
+        };
+        //l();
+
+        function m(){
+            //除了for...of循环以外，扩展运算符...、解构赋值和Array.from方法内部调用的，都是遍历器接口，这意味着，他们都可以将Generator返回的对象作为参数
+            function* numbers(){
+                yield 1;
+                yield 2;
+                yield 3;
+                return 4;
+            }
+            //扩展运算符
+            log([...numbers()]);//[1, 2, 3]
+            //Array.from方法
+            log(Array.from(numbers()));//[1, 2, 3]
+            //解构赋值
+            let [x,y] = numbers();
+            log(x,y);
+            //for...of
+            for (let val of numbers()){
+                log(val);
+            }
+        };
+        //m();
+
+        function n(){
+            var g = function* () {
+                try {
+                    yield;
+                } catch (e) {
+                    console.log('内部捕获', e);
+                }
+            };
+
+            var i = g();
+            i.next();
+
+            try {
+                i.throw('a');
+                i.throw('b');
+            } catch (e) {
+                console.log('外部捕获', e);
+            }
+        };
+        //n();
+
+        function o(){
+            //Generator.prototype.return()
+            //Generator函数返回的遍历器对象，还有一个return()方法，可以返回给定的值，并且终结遍历Generator函数
+            function* gen1(){
+                yield 1;
+                yield 2;
+                yield 3;
+            }
+            let g = gen1();
+            log(g.next());//{value: 1, done: false}
+            log(g.next());//{value: 2, done: false}
+            //log(g.return(4));//{value: 4, done: true}
+            //如果不提供参数，返回的value属性为undefined
+            log(g.return());//{value: undefined, done: true}
+
+
+            //如果有try.finally块，调用return方法后，会立刻进入到finally，最后执行return结束
+            function* gen2(){
+                yield 1;
+                try{
+                    yield 2;
+                } finally{
+                    yield 3;
+                    yield 4;
+                }
+            };
+            let g2 = gen2();
+            //经验证，必须要进入try语句块调用再调用return方法才生效
+            log(g2.next());//{value: 1, done: false}
+            log(g2.next());//{value: 2, done: false}
+            log(g2.return(7));//{value: 3, done: false}
+            log(g2.next());//{value: 4, done: false}
+            log(g2.next());//{value: 7, done: false}
+
+
+            
+
+        };
+        //o();
+
+        function p(){
+            //yield* 表达式
+            function* foo(){
+                yield 1;
+                yield 2;
+            };
+            function* foo1(){
+                yield 3;
+                yield 4;
+                yield* foo();
+            }
+            for(let val of foo1()){
+                log(val);//3,4,1,2
+            }
+
+
+            //如果yield* 后面跟着数组，由于数组原生支持遍历器，因此就会遍历数组成员
+            function* foo2(){
+                yield* [1,2];
+                yield* 'zywds';
+            }
+            let f2 = foo2();
+            log(f2.next());//{value: 1, done: false}
+            log(f2.next());//{value: 2, done: false}
+            log(f2.next());//{value: 'z', done: false}
+
+        };
+        //p();
+
+
+        function q(){
+            //如果被代理的Generator函数有return语句，那么可以向代理它的Generator函数返回值
+            function* foo(){
+                yield 2;
+                return 'return';
+            };
+            function* foo1(){
+                yield 1;
+                let val = yield* foo();
+                log(val);//return
+                yield 3;
+            };
+            let f3 = foo1();
+            log(f3.next());//{value: 1, done: false}
+            log(f3.next());//{value: 2, done: false}
+            log(f3.next());//{value: 3, done: false}
+            log(f3.next());//{value: undefined, done: true}
+            log(f3.next());//{value: undefined, done: true}
+        };
+        //q();
+
+        function r(){
+            //yield* 与扩展运算符结合使用
+            function* foo(){
+                yield 1;
+                yield 2;
+                return 'foo';
+            }
+            function* foo2(){
+                let v = yield* foo();
+                log(v);
+            }
+            log([...foo2()]);//[1, 2]
+        };
+        r();
 
     </script>
 </body>
